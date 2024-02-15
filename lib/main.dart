@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
       home: const Scaffold(
           body: SafeArea(
               child:
-                  ScreenUtilInit(designSize: Size(360, 690), child: HomeScreen()))),
+                  ScreenUtilInit(designSize: Size(360, 690), child: Login()))),
       theme: ThemeData(primarySwatch: ModeColor.mode),
       builder: (context, child) {
         final mediaQueryData = MediaQuery.of(context);

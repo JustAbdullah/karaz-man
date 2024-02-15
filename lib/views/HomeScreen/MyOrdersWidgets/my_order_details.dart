@@ -1,8 +1,9 @@
+// ignore_for_file: unused_element
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../controllers/controller_app.dart';
@@ -16,16 +17,21 @@ import '../../../../customWidgets/custom_padding.dart';
 
 import '../../../../customWidgets/custom_text.dart';
 
-class OrdersDetails extends StatelessWidget {
-  const OrdersDetails({super.key});
+class MyOrdersDetails extends StatefulWidget {
+  const MyOrdersDetails({super.key});
 
+  @override
+  State<MyOrdersDetails> createState() => _MyOrdersDetailsState();
+}
+
+class _MyOrdersDetailsState extends State<MyOrdersDetails> {
   @override
   Widget build(BuildContext context) {
     ControllerApp homeController = Get.put(ControllerApp());
 
     return GetX<ControllerApp>(
         builder: (controller) => Visibility(
-            visible: controller.showTheDetails.value,
+            visible: controller.showMyOrderTheDetails.value,
             child: Stack(
               children: [
                 Container(
@@ -66,7 +72,7 @@ class OrdersDetails extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                controller.showTheDetails.value = false;
+                                controller.showMyOrderTheDetails.value = false;
                               },
                               child: Container(
                                 alignment: Alignment.center,
@@ -90,6 +96,533 @@ class OrdersDetails extends StatelessWidget {
                             ),
                           ],
                         ),
+                      ),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: 200.w,
+                          height: 35.h,
+                          decoration: BoxDecoration(
+                              color: AppColors.balckColorTypeFour,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Text(
+                            "تفاصيل حول مزود الخدمة".tr,
+                            style: TextStyle(
+                                height: 1.3.h,
+                                fontSize: 15,
+                                fontFamily: AppTextStyles.Almarai,
+                                color: AppColors.whiteColor),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          controller.sendNo(controller.tokenTheUser.toString(),
+                              "عزيزي العميل لقد وصل الفني إلى موقعك الرجاء التواصل معه");
+                          controller.AddNotice(
+                              "لقد وصل الفني ${controller.Name.value} الى موقع العميل للقيام بالخدمة التى تحمل رقم:${controller.numberOfOrder}");
+                        },
+                        child: Container(
+                            alignment: Alignment.center,
+                            height: 50.h,
+                            width: 300.w,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: AppColors.whiteColor,
+                                border: Border.all(
+                                  color: AppColors
+                                      .theMainColor, //                   <--- border color
+                                  width: 1.5,
+                                )),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.w),
+                              child: Text(
+                                "ارسال أشعار الوصول للموقع".tr,
+                                style: TextStyle(
+                                    height: 1.3.h,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: AppTextStyles.Almarai,
+                                    color: AppColors.balckColorTypeFour),
+                                textAlign: TextAlign.center,
+                              ),
+                            )),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          controller.endTheOrder(
+                              controller.idOfOrder.toString(),
+                              controller.tokenTheUser.toString(),
+                              "عزيزي العميل لقد أتم العميل الخدمة بنجاح نرجو ان تكون نالت على إعجابك");
+                          controller.showMyOrderTheDetails.value = false;
+                          controller.showMyTheOrderPage.value = false;
+
+                          controller.AddNotice(
+                              "لقد اتم الفني ${controller.Name.value} الخدمة بنجاح التى تحمل رقم:${controller.numberOfOrder}");
+                        },
+                        child: Container(
+                            alignment: Alignment.center,
+                            height: 50.h,
+                            width: 300.w,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: AppColors.whiteColor,
+                                border: Border.all(
+                                  color: AppColors
+                                      .theMainColor, //                   <--- border color
+                                  width: 1.5,
+                                )),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 30.w),
+                              child: Text(
+                                "تم العمل",
+                                style: TextStyle(
+                                    height: 2.h,
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: AppTextStyles.Almarai,
+                                    color: AppColors.balckColorTypeFour),
+                                textAlign: TextAlign.center,
+                              ),
+                            )),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      PaddingCustom(
+                        theTop: 00.h,
+                        theBottom: 00.h,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 30.w),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "الخدمات الإضافية المقدمة لهذة الطلبية".tr,
+                              style: TextStyle(
+                                  height: 1.3.h,
+                                  fontSize: 15.sp,
+                                  fontFamily: AppTextStyles.Almarai,
+                                  color: AppColors.balckColorTypeFour),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ), /////////////////////
+                      GetX<ControllerApp>(
+                          builder: (Thecontroller) => FutureBuilder(
+                              future: Thecontroller.getTypeOFSubTyps(
+                                  Thecontroller.idSubType.value.toString()),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot snapshot) {
+                                if (snapshot.hasData) {
+                                  return Thecontroller
+                                              .isNoDataTypeOFSubTypes.value ==
+                                          true
+                                      ? Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                              Text(
+                                                "5-لايوجد بيانات".tr,
+                                                style: TextStyle(
+                                                    fontFamily: 'Cairo',
+                                                    color: Color(0xFFC70039),
+                                                    fontSize: 20.sp,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                                textAlign: TextAlign.center,
+                                              )
+                                            ])
+                                      : Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          height: 100.h,
+                                          child: GridView.builder(
+                                              itemCount:
+                                                  snapshot.data['data'].length,
+                                              itemBuilder: (context, i) {
+                                                return Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 5, right: 5),
+                                                    child: InkWell(
+                                                      onTap: () {},
+                                                      child: SizedBox(
+                                                        height: 70.h,
+                                                        child:
+                                                            SingleChildScrollView(
+                                                          child: Column(
+                                                            children: [
+                                                              InkWell(
+                                                                  onTap: () {
+                                                                    if (Thecontroller.choseService.containsKey(snapshot
+                                                                        .data[
+                                                                            'data']
+                                                                            [i][
+                                                                            'type_sub_id']
+                                                                        .toString())) {
+                                                                      controller.choseService.remove(snapshot
+                                                                          .data[
+                                                                              'data']
+                                                                              [
+                                                                              i]
+                                                                              [
+                                                                              'type_sub_id']
+                                                                          .toString());
+
+                                                                      setState(
+                                                                          () {});
+                                                                    } else {
+                                                                      Thecontroller.choseService[snapshot
+                                                                          .data[
+                                                                              'data']
+                                                                              [
+                                                                              i]
+                                                                              [
+                                                                              'type_sub_id']
+                                                                          .toString()] = snapshot.data[
+                                                                              'data']
+                                                                              [
+                                                                              i]
+                                                                              [
+                                                                              'sub_type_id_key']
+                                                                          .toString();
+                                                                      setState(
+                                                                          () {});
+                                                                      /////////////
+                                                                    }
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    width:
+                                                                        140.w,
+                                                                    height:
+                                                                        40.h,
+                                                                    decoration: BoxDecoration(
+                                                                        color: Thecontroller.choseService.containsKey(snapshot.data['data'][i]['type_sub_id'].toString()) ? AppColors.theMainColor : AppColors.whiteColor,
+                                                                        borderRadius: BorderRadius.circular(5),
+                                                                        border: Border.all(
+                                                                          color:
+                                                                              AppColors.theMainColor,
+                                                                          width:
+                                                                              1.3,
+                                                                        )),
+                                                                    child:
+                                                                        Center(
+                                                                      child:
+                                                                          SingleChildScrollView(
+                                                                        scrollDirection:
+                                                                            Axis.horizontal,
+                                                                        child:
+                                                                            Padding(
+                                                                          padding: EdgeInsets.symmetric(
+                                                                              horizontal: 10.w,
+                                                                              vertical: 10.h),
+                                                                          child:
+                                                                              GetX<ChangeLanguageToLocale>(
+                                                                            builder: (scontroller) => scontroller.isChange.value == false
+                                                                                ? Text(
+                                                                                    snapshot.data['data'][i]['name_type_sub'].toString(),
+                                                                                    style: TextStyle(height: 1.3.h, fontSize: 15, fontFamily: AppTextStyles.Almarai, color: controller.choseService.containsKey(snapshot.data['data'][i]['type_sub_id'].toString()) ? AppColors.whiteColor : AppColors.blackColor),
+                                                                                    textAlign: TextAlign.center,
+                                                                                  )
+                                                                                : Text(
+                                                                                    snapshot.data['data'][i]['name_type_sub_en'].toString(),
+                                                                                    style: TextStyle(height: 1.3.h, fontSize: 15, fontFamily: AppTextStyles.Almarai, color: controller.choseService.containsKey(snapshot.data['data'][i]['type_sub_id'].toString()) ? AppColors.whiteColor : AppColors.blackColor),
+                                                                                    textAlign: TextAlign.center,
+                                                                                  ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  )),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ));
+                                              },
+                                              gridDelegate:
+                                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                                childAspectRatio:
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .width /
+                                                        (MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            5),
+                                                crossAxisCount: 3,
+                                                mainAxisSpacing: 0.0,
+                                                crossAxisSpacing: 0.0,
+                                              )),
+                                        );
+                                } else {
+                                  return Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 50.h,
+                                      child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount: 5,
+                                          shrinkWrap: true,
+                                          itemBuilder: (context, i) {
+                                            return Shimmer.fromColors(
+                                                baseColor: Color.fromARGB(
+                                                    31, 83, 82, 82),
+                                                highlightColor:
+                                                    AppColors.whiteColor,
+                                                enabled: true,
+                                                child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 5, right: 5),
+                                                    child: Shimmer.fromColors(
+                                                        baseColor:
+                                                            Color.fromARGB(
+                                                                31, 83, 82, 82),
+                                                        highlightColor:
+                                                            AppColors
+                                                                .whiteColor,
+                                                        enabled: true,
+                                                        child: Container(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          height: 50.h,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          6),
+                                                              color: AppColors
+                                                                  .yellowColor),
+                                                          child: Padding(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        7),
+                                                            child: Center(
+                                                              child: Text(
+                                                                "5-لايوجد بيانات"
+                                                                    .tr,
+                                                                style: TextStyle(
+                                                                    fontFamily:
+                                                                        'Cairo',
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        17.sp,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ))));
+                                          }));
+                                }
+                              })),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      /////////////////////////////
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 40.w),
+                        child: Material(
+                          elevation: 4,
+                          shadowColor: AppColors.theMainColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          child: TextFormField(
+                            controller: homeController.newPricdeCotroller,
+                            onChanged: (value) {
+                              controller.newPriceText = value.toString();
+                            },
+                            onSaved: (newValue) {
+                              controller.newPriceText = newValue.toString();
+                            },
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                                hintText: "السعر الجديد".tr,
+                                // important line
+                                // control your hints text size
+                                hintStyle: TextStyle(
+                                    fontFamily: AppTextStyles.Almarai,
+                                    letterSpacing: 0.8,
+                                    color: AppColors.balckColorTypeFour
+                                        .withOpacity(0.5),
+                                    fontWeight: FontWeight.bold),
+                                fillColor: Colors.white54,
+                                filled: true,
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                    borderSide: BorderSide.none)),
+                            maxLines: 1,
+                            minLines: 1,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          controller.endTheOrderWithNewPrice(
+                              controller.idOfOrder.toString(),
+                              controller.newPriceText.toString(),
+                              controller.tokenTheUser.toString(),
+                              "عزيزي العميل لقد قام العميل بإتمام الخدمة بنجاح نرجو أن تكون نالت على إعجابك");
+                          controller.showMyOrderTheDetails.value = false;
+                          controller.showMyTheOrderPage.value = false;
+
+                          controller.AddNotice(
+                              "لقد اتم الفني ${controller.Name.value} الخدمة بنجاح التى تحمل رقم:${controller.numberOfOrder} مع إضافة تسعيرة جديدة حيث قام  بمهام مختلفة تطلب سعر جديد والسعر الجديد هو:${controller.newPriceText.toString()} ");
+                        },
+                        child: Container(
+                            alignment: Alignment.center,
+                            height: 50.h,
+                            width: 300.w,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: AppColors.whiteColor,
+                                border: Border.all(
+                                  color: AppColors
+                                      .theMainColor, //                   <--- border color
+                                  width: 1.5,
+                                )),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 30.w),
+                              child: Text(
+                                " تم العمل مع السعر الجديد".tr,
+                                style: TextStyle(
+                                    height: 2.h,
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: AppTextStyles.Almarai,
+                                    color: AppColors.balckColorTypeFour),
+                                textAlign: TextAlign.center,
+                              ),
+                            )),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: 200.w,
+                          height: 35.h,
+                          decoration: BoxDecoration(
+                              color: AppColors.balckColorTypeFour,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Text(
+                            "التاجيل-او الالغاء".tr,
+                            style: TextStyle(
+                                height: 1.3.h,
+                                fontSize: 15,
+                                fontFamily: AppTextStyles.Almarai,
+                                color: AppColors.whiteColor),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          controller.editTheTimeAndOrderTime(
+                            controller.idOfOrder.toString(),
+                          );
+                          controller.AddNotice(
+                              "لقد قام الفني ${controller.Name.value} بتأجيل القيام بالخدمة التى تحمل رقم:${controller.numberOfOrder}");
+                          controller.sendNo(controller.tokenTheUser.toString(),
+                              "عزيزي العميل لقد تم تاجيل موعد تقديم الخدمة كونها قد تحتاج لقطع أضافية او امور أخرى");
+
+                          controller.showMyOrderTheDetails.value = false;
+                          controller.showMyTheOrderPage.value = false;
+                        },
+                        child: Container(
+                            alignment: Alignment.center,
+                            height: 50.h,
+                            width: 300.w,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: AppColors.whiteColor,
+                                border: Border.all(
+                                  color: AppColors
+                                      .yellowColor, //                   <--- border color
+                                  width: 1.5,
+                                )),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 30.w),
+                              child: Text(
+                                "تاجيل الموعد".tr,
+                                style: TextStyle(
+                                    height: 2.h,
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: AppTextStyles.Almarai,
+                                    color: AppColors.balckColorTypeFour),
+                                textAlign: TextAlign.center,
+                              ),
+                            )),
+                      ),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          controller.canleOrder(
+                            controller.idOfOrder.toString(),
+                          );
+                          controller.AddNotice(
+                              "لقد قام الفني ${controller.Name.value} بألغاء القيام بالخدمة  التى تحمل رقم:${controller.numberOfOrder}");
+                          controller.showMyOrderTheDetails.value = false;
+                          controller.showMyTheOrderPage.value = false;
+                        },
+                        child: Container(
+                            alignment: Alignment.center,
+                            height: 50.h,
+                            width: 300.w,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: AppColors.whiteColor,
+                                border: Border.all(
+                                  color: AppColors
+                                      .redColor, //                   <--- border color
+                                  width: 1.5,
+                                )),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 30.w),
+                              child: Text(
+                                "إلغاء العمل ".tr,
+                                style: TextStyle(
+                                    height: 2.h,
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: AppTextStyles.Almarai,
+                                    color: AppColors.balckColorTypeFour),
+                                textAlign: TextAlign.center,
+                              ),
+                            )),
                       ),
                       SizedBox(
                         height: 30.h,
@@ -915,13 +1448,20 @@ class OrdersDetails extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                       controller.showTheLocation.value = true;
+                          controller.showTheLocation.value = true;
                         },
                         child: Container(
-                            height: 20.h,
+                            alignment: Alignment.center,
+                            height: 50.h,
+                            width: 200.w,
                             decoration: BoxDecoration(
-                                color: AppColors.yellowColor,
-                                borderRadius: BorderRadius.circular(5)),
+                                borderRadius: BorderRadius.circular(5),
+                                color: AppColors.whiteColor,
+                                border: Border.all(
+                                  color: AppColors
+                                      .theMainColor, //                   <--- border color
+                                  width: 1.5,
+                                )),
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20.w),
                               child: Text(
@@ -936,28 +1476,8 @@ class OrdersDetails extends StatelessWidget {
                               ),
                             )),
                       ),
-                      PaddingCustom(
-                        theTop: 10.h,
-                        theBottom: 10.h,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 30.w),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "80-هل هنالك خطا في موقعك؟ تستطيع تغيير موقعك من خلال الذهاب إلى الاعدادت-موقعي-تغيير الموقع"
-                                  .tr,
-                              style: TextStyle(
-                                  height: 1.3.h,
-                                  fontSize: 10,
-                                  fontFamily: AppTextStyles.Almarai,
-                                  color: AppColors.theMainColorTwo),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ),
                       SizedBox(
-                        height: 30.h,
+                        height: 20.h,
                       ),
                       Align(
                         alignment: Alignment.center,
@@ -1044,9 +1564,6 @@ class OrdersDetails extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10.h,
                       ),
                     ]))),
               ],

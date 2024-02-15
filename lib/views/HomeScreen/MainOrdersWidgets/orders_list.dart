@@ -55,7 +55,7 @@ class OrdersList extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    controller.latitude.value.toString(),
+                                   "الطلبات المتوفرة",
                                     style: TextStyle(
                                         height: 1.3.h,
                                         fontSize: 19,
