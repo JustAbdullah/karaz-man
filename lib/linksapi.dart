@@ -1,6 +1,7 @@
 import 'dart:core';
 
 class AppLinksApi {
+  static const uploadimage = "https://larra.xyz/uploadimagetest.php";
   static const path = "https://larra.xyz/php_serivecs/serivecs_man";
   static const login =
       "https://larra.xyz/php_serivecs/serivecs_man/login_serivecs_man.php";
@@ -29,4 +30,16 @@ class AppLinksApi {
 
   static const addNoti =
       "https://larra.xyz/php_serivecs/serivecs_man/add_notice_service.php";
+
+  static const sendMessage =
+      "https://larra.xyz/php_serivecs/send_message_user.php";
+
+  static const add_invoice =
+      "https://larra.xyz/php_serivecs/serivecs_man/add_invoice.php";
+
+  static const edit_wallte_service_man =
+      "https://larra.xyz/php_serivecs/serivecs_man/edit_wallte_service_man.php";
+
+  static const getDataRatio =
+      "https://larra.xyz/php_serivecs/serivecs_man/get_data_ra_wa.php";
 }

@@ -30,8 +30,15 @@ class ChangeLanguageToLocale extends GetxController {
       Get.changeTheme;
       isChange.value = false;
       update();
-    } else if (langcode == "en") {
+    } else if (langcode == "bi") {
       appServices.sharedPreferences.setInt("langData", 2);
+      changeLangData.value =
+          appServices.sharedPreferences.getInt('langData') as int;
+      Get.changeTheme;
+      isChange.value = true;
+      update();
+    } else if (langcode == "be") {
+      appServices.sharedPreferences.setInt("langData", 3);
       changeLangData.value =
           appServices.sharedPreferences.getInt('langData') as int;
       Get.changeTheme;
@@ -56,16 +63,27 @@ class ChangeLanguageToLocale extends GetxController {
           appServices.sharedPreferences.getInt('langData') as int;
       Get.changeTheme;
       isChange.value = false;
-    } else if (sharedPrefLang == "en") {
-      language = Locale("en");
+    } else if (sharedPrefLang == "bi") {
+      language = Locale("bi");
 
       appServices.sharedPreferences.setInt("langData", 2);
       changeLangData.value =
           appServices.sharedPreferences.getInt('langData') as int;
       Get.changeTheme;
       isChange.value = true;
+    } else if (sharedPrefLang == "be") {
+      language = Locale("be");
+
+      appServices.sharedPreferences.setInt("langData", 3);
+      changeLangData.value =
+          appServices.sharedPreferences.getInt('langData') as int;
+      Get.changeTheme;
+      isChange.value = true;
     } else {
       language = Locale(Get.deviceLocale!.languageCode);
+      Get.deviceLocale!.languageCode == "ar"
+          ? themechage = true
+          : themechage = false;
     }
   }
 }

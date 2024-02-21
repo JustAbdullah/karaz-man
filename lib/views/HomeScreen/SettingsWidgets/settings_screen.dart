@@ -72,7 +72,7 @@ class SettingsMenu extends StatelessWidget {
                           Align(
                               alignment: Alignment.center,
                               child: Text(
-                                "12-الإعدادت".tr,
+                                "60-الإعدادت".tr,
                                 style: TextStyle(
                                     height: 1.3.h,
                                     fontSize: 21,
@@ -93,15 +93,8 @@ class SettingsMenu extends StatelessWidget {
                               },
                               child: Row(
                                 children: [
-                                  Image.asset(
-                                    ImagesPath.info,
-                                    width: 20.w,
-                                  ),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
                                   Text(
-                                    "13-معلومات الحساب".tr,
+                                    "61-معلومات الحساب".tr,
                                     style: TextStyle(
                                         height: 1.3.h,
                                         fontSize: 15,
@@ -136,15 +129,8 @@ class SettingsMenu extends StatelessWidget {
                               },
                               child: Row(
                                 children: [
-                                  Image.asset(
-                                    ImagesPath.locationIcon,
-                                    width: 20.w,
-                                  ),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
                                   Text(
-                                    "15-موقعي".tr,
+                                    "62-موقعي".tr,
                                     style: TextStyle(
                                         height: 1.3.h,
                                         fontSize: 15,
@@ -174,18 +160,13 @@ class SettingsMenu extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20.w),
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                controller.showLang.value = true;
+                              },
                               child: Row(
                                 children: [
-                                  Image.asset(
-                                    ImagesPath.info,
-                                    width: 20.w,
-                                  ),
-                                  SizedBox(
-                                    width: 10.w,
-                                  ),
                                   Text(
-                                    "168-اللغة".tr,
+                                    "63-اللغة".tr,
                                     style: TextStyle(
                                         height: 1.3.h,
                                         fontSize: 15,
@@ -198,49 +179,6 @@ class SettingsMenu extends StatelessWidget {
                                 ],
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 8.h,
-                          ),
-                          Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20.w),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 0.17.h,
-                                color: AppColors.balckColorTypeFour,
-                              )),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20.w),
-                              child: InkWell(
-                                onTap: () {},
-                                child: Row(
-                                  children: [
-                                    Image.asset(
-                                      ImagesPath.logOut,
-                                      width: 20.w,
-                                    ),
-                                    SizedBox(
-                                      width: 10.w,
-                                    ),
-                                    Text(
-                                      "18-تسجيل خروج".tr,
-                                      style: TextStyle(
-                                          height: 1.3.h,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: AppTextStyles.Almarai,
-                                          color: AppColors.balckColorTypeFour),
-                                      textAlign: TextAlign.center,
-                                      maxLines: 2,
-                                    ),
-                                  ],
-                                ),
-                              )),
-                          SizedBox(
-                            height: 8.h,
                           ),
                           Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20.w),

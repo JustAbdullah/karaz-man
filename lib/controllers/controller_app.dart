@@ -1,20 +1,46 @@
 //import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
-
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:services_man_karaz/core/constant/images_path.dart';
 import 'package:services_man_karaz/views/HomeScreen/home_screen.dart';
 import '../core/class/class/crud.dart';
 import 'package:http/http.dart' as http;
 
 import '../core/services/appservices.dart';
 import '../linksapi.dart';
+import '../views/SaveLocation/saved_location.dart';
+import '../views/langScreen/choose_language.dart';
+
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 class ControllerApp extends GetxController {
+  RxBool theWay = false.obs;
+  WhereGoingTheApp() {
+    Future.delayed(Duration(seconds: 5), () async {
+      if (theWay.value == false) {
+        if (appServices.sharedPreferences.containsKey('Name')) {
+          Get.to(HomeScreen());
+          theWay.value = true;
+        } else {
+          Get.to(ChooseLanguage());
+          theWay.value = true;
+        }
+      } else {}
+    });
+  }
+
   final crud = Crud();
   AppServices appServices = Get.find();
   TextEditingController passwordAuthLoginController = TextEditingController();
@@ -34,6 +60,8 @@ class ControllerApp extends GetxController {
   RxDouble latitudePlus = 0.0.obs;
   RxDouble latitudeMinus = 0.0.obs;
   RxDouble latitudeOP = 0.08.obs;
+  RxInt Thewallet = 0.obs;
+  RxInt ratio = 0.obs;
 
   RxDouble longitude = 0.0.obs;
   RxDouble longitudePlus = 0.0.obs;
@@ -51,11 +79,15 @@ class ControllerApp extends GetxController {
         showTheOrderPage.value = true;
         ID.value = response['data'][0]['id'].toString();
         Name.value = response['data'][0]['name'].toString();
+
         theNameOFServiceType.value =
             response['data'][0]['services_main_name_en'].toString();
         Phone.value = response['data'][0]['phone'].toString();
         tyeTypeOFSerivces.value =
             int.parse(response['data'][0]['service_type'].toString());
+
+        Thewallet.value = int.parse(response['data'][0]['wallet'].toString());
+        ratio.value = int.parse(response['data'][0]['ratio'].toString());
 
         latitude.value =
             double.parse(response['data'][0]['latitude'].toString());
@@ -68,6 +100,8 @@ class ControllerApp extends GetxController {
         appServices.sharedPreferences
             .setInt('service_type', tyeTypeOFSerivces.value);
         appServices.sharedPreferences.setString('ID', ID.value);
+        appServices.sharedPreferences.setInt('wallet', Thewallet.value);
+        appServices.sharedPreferences.setInt('ratio', ratio.value);
         appServices.sharedPreferences.setString('phone', Phone.value);
         appServices.sharedPreferences.setDouble('Long', longitude.value);
         appServices.sharedPreferences.setDouble('Lat', latitude.value);
@@ -85,19 +119,27 @@ class ControllerApp extends GetxController {
           .getString('services_main_name_en') as String;
       tyeTypeOFSerivces.value =
           appServices.sharedPreferences.getInt('service_type') as int;
+      Thewallet.value = appServices.sharedPreferences.getInt('wallet') as int;
+      ratio.value = appServices.sharedPreferences.getInt('ratio') as int;
 
       ID.value = appServices.sharedPreferences.getString('ID') as String;
+
       Phone.value = appServices.sharedPreferences.getString('phone') as String;
       longitude.value =
           appServices.sharedPreferences.getDouble('Long') as double;
       latitude.value = appServices.sharedPreferences.getDouble('Lat') as double;
+
+      latitudePlus.value = latitude.value + latitudeOP.value;
+      latitudeMinus.value = latitude.value - latitudeOP.value;
+
+      longitudePlus.value = longitude.value + longitudeOP.value;
+      longitudeMinus.value = longitude.value - longitudeOP.value;
+      GetWallteAndRatio(ID.value);
     }
 
-    latitudePlus.value = latitude.value + latitudeOP.value;
-    latitudeMinus.value = latitude.value - latitudeOP.value;
-
-    longitudePlus.value = longitude.value + longitudeOP.value;
-    longitudeMinus.value = longitude.value - longitudeOP.value;
+    if (ID.value != 0) {
+      GetWallteAndRatio(ID.value);
+    }
 
     super.onInit();
   }
@@ -120,6 +162,8 @@ class ControllerApp extends GetxController {
   double latitudeOrder = 0.0;
   String theWayToPayTheOrder = "";
   String tokenTheUser = "";
+  String idUser = "";
+  String nameUser = "";
 
   RxBool showTheDetails = false.obs;
 
@@ -249,7 +293,7 @@ class ControllerApp extends GetxController {
             await Future.delayed(Duration(seconds: 4), () async {
               loadingTheLocationAndSave.value = false;
 
-              Get.to(HomeScreen());
+              Get.to(SaveeLocation());
             });
           });
         }
@@ -346,14 +390,14 @@ class ControllerApp extends GetxController {
         "body": "${Thebody.toString()}",
         "sound": "default",
         "image":
-            "https://firebasestorage.googleapis.com/v0/b/smoe-48557.appspot.com/o/1222.png?alt=media&token=620f0b0c-40c7-4fe8-a0f9-269ff7dd3f8f"
+            "https://firebasestorage.googleapis.com/v0/b/jalai-45565.appspot.com/o/logo.png?alt=media&token=4c593126-a27b-4449-bf32-7fd37f1a9b47"
       },
       "data": {
         "message": "Offer!",
         "image_url":
-            "https://firebasestorage.googleapis.com/v0/b/smoe-48557.appspot.com/o/1222.png?alt=media&token=620f0b0c-40c7-4fe8-a0f9-269ff7dd3f8f",
+            "https://firebasestorage.googleapis.com/v0/b/jalai-45565.appspot.com/o/logo.png?alt=media&token=4c593126-a27b-4449-bf32-7fd37f1a9b47",
         "image":
-            "https://firebasestorage.googleapis.com/v0/b/smoe-48557.appspot.com/o/1222.png?alt=media&token=620f0b0c-40c7-4fe8-a0f9-269ff7dd3f8f"
+            "https://firebasestorage.googleapis.com/v0/b/jalai-45565.appspot.com/o/logo.png?alt=media&token=4c593126-a27b-4449-bf32-7fd37f1a9b47",
       }
     };
 
@@ -374,6 +418,7 @@ class ControllerApp extends GetxController {
 
   RxBool showTheSettings = false.obs;
   RxBool showTheAccountInfo = false.obs;
+  RxBool showLang = false.obs;
 
   /////////////////services Chosed..............////////
   Map<String, String> choseService = {};
@@ -428,5 +473,215 @@ class ControllerApp extends GetxController {
     });
 
     return response;
+  }
+
+  void sendMessage(String title, String id) async {
+    var response = await crud.postRequest(AppLinksApi.sendMessage, {
+      'user_id': id.toString(),
+      'body': title.toString(),
+    });
+
+    return response;
+  }
+
+  upIm(File? mfile) async {
+    // ignore: unused_local_variable
+    var response =
+        await crud.postRequestFile(AppLinksApi.uploadimage, {}, mfile!);
+  }
+
+  void savePdf(String idOfOrder, String nameServiceMan, String nameOfUser,
+      String price, String typeOfService, String idTheUser) async {
+    var now = DateTime.now();
+    var formatter = DateFormat('yyyy-MM-dd');
+    String formattedDate = formatter.format(now);
+
+    final pdf = pw.Document();
+
+    final logoImageData = await rootBundle.load(ImagesPath.logo);
+    final logoImage = pw.MemoryImage(
+      logoImageData.buffer.asUint8List(),
+    );
+    final fontData =
+        await rootBundle.load('android/assets/fonts/Almarai-Regular.ttf');
+    final ttf = pw.Font.ttf(fontData);
+
+    pdf.addPage(pw.Page(
+      build: (pw.Context context) => pw.Container(
+          alignment: pw.Alignment.center,
+          child: pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.center,
+            children: [
+              pw.Image(logoImage, width: 100.w, height: 80.h),
+              pw.SizedBox(
+                height: 10.h,
+              ),
+              pw.Text("فاتورة طلب خدمة",
+                  textDirection: pw.TextDirection.rtl,
+                  style: pw.TextStyle(fontSize: 24, font: ttf)),
+              pw.SizedBox(
+                height: 10.h,
+              ),
+              pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                  children: [
+                    pw.Directionality(
+                      textDirection: pw.TextDirection.ltr,
+                      child: pw.Text(formattedDate,
+                          textDirection: pw.TextDirection.rtl,
+                          style: pw.TextStyle(fontSize: 17, font: ttf)),
+                    ),
+                    pw.Text("تاريخ الفاتورة",
+                        textDirection: pw.TextDirection.rtl,
+                        style: pw.TextStyle(fontSize: 17, font: ttf)),
+                  ]),
+              pw.SizedBox(
+                height: 17.h,
+              ),
+              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
+                pw.Directionality(
+                  textDirection: pw.TextDirection.ltr,
+                  child: pw.Text(idOfOrder,
+                      textDirection: pw.TextDirection.rtl,
+                      style: pw.TextStyle(fontSize: 17, font: ttf)),
+                ),
+                pw.SizedBox(
+                  width: 5.w,
+                ),
+                pw.Text("رقم الفاتورة:",
+                    textDirection: pw.TextDirection.rtl,
+                    style: pw.TextStyle(fontSize: 17, font: ttf)),
+              ]),
+              pw.SizedBox(
+                height: 7.h,
+              ),
+              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
+                pw.Directionality(
+                  textDirection: pw.TextDirection.rtl,
+                  child: pw.Text(nameServiceMan,
+                      textDirection: pw.TextDirection.rtl,
+                      style: pw.TextStyle(fontSize: 17, font: ttf)),
+                ),
+                pw.SizedBox(
+                  width: 5.w,
+                ),
+                pw.Text("اسم الفني:",
+                    textDirection: pw.TextDirection.rtl,
+                    style: pw.TextStyle(fontSize: 17, font: ttf)),
+              ]),
+              pw.SizedBox(
+                height: 7.h,
+              ),
+              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
+                pw.Directionality(
+                  textDirection: pw.TextDirection.rtl,
+                  child: pw.Text(nameOfUser,
+                      textDirection: pw.TextDirection.rtl,
+                      style: pw.TextStyle(fontSize: 17, font: ttf)),
+                ),
+                pw.SizedBox(
+                  width: 5.w,
+                ),
+                pw.Text("اسم العميل:",
+                    textDirection: pw.TextDirection.rtl,
+                    style: pw.TextStyle(fontSize: 17, font: ttf)),
+              ]),
+              pw.SizedBox(
+                height: 7.h,
+              ),
+              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
+                pw.Directionality(
+                  textDirection: pw.TextDirection.rtl,
+                  child: pw.Text(typeOfService,
+                      textDirection: pw.TextDirection.rtl,
+                      style: pw.TextStyle(fontSize: 17, font: ttf)),
+                ),
+                pw.SizedBox(
+                  width: 5.w,
+                ),
+                pw.Text("نوع الخدمة:",
+                    textDirection: pw.TextDirection.rtl,
+                    style: pw.TextStyle(fontSize: 17, font: ttf)),
+              ]),
+              pw.SizedBox(
+                height: 7.h,
+              ),
+              pw.Row(mainAxisAlignment: pw.MainAxisAlignment.center, children: [
+                pw.Directionality(
+                  textDirection: pw.TextDirection.ltr,
+                  child: pw.Text(price,
+                      textDirection: pw.TextDirection.rtl,
+                      style: pw.TextStyle(fontSize: 17, font: ttf)),
+                ),
+                pw.SizedBox(
+                  width: 5.w,
+                ),
+                pw.Text("الاجمالي النهائي:",
+                    textDirection: pw.TextDirection.rtl,
+                    style: pw.TextStyle(fontSize: 17, font: ttf)),
+              ]),
+              pw.SizedBox(
+                height: 7.h,
+              ),
+            ],
+          )),
+    ));
+
+    // حفظ الفاتورة في ملف PDF على الجهاز
+    final output = await getTemporaryDirectory();
+    final file = File("${output.path}/${idOfOrder}.pdf");
+    await file.writeAsBytes(await pdf.save());
+
+    final fileOne = await file.writeAsBytes(await pdf.save());
+
+    print(output.path);
+    print(file.path);
+    print(output);
+    upIm(fileOne);
+
+    addIntoDataBaseInvoice(idTheUser.toString(), idOfOrder.toString());
+  }
+
+  addIntoDataBaseInvoice(String idUser, String pdf) async {
+    var response = await crud.postRequest(AppLinksApi.add_invoice, {
+      'id_user': idUser.toString(),
+      'service_man': ID.toString(),
+      'pdf': "https://larra.xyz/thenewImages/${pdf.toString()}.pdf",
+    });
+
+    return response;
+  }
+
+  RxBool anotherTask = false.obs;
+
+////////////////...................................Change The Wallte.//////////////////
+
+  changeWallet(String wallet) async {
+    var response = await crud.postRequest(AppLinksApi.edit_wallte_service_man,
+        {'id': ID.value.toString(), 'wallet': wallet.toString()});
+
+    await Future.delayed(Duration(seconds: 7), () async {
+      GetWallteAndRatio(ID.value);
+    });
+
+    return response;
+  }
+
+  ///////////////////Get Wallet And Ratio:.....................////////
+
+  RxDouble wallet = 0.0.obs;
+  RxDouble ratioS = 0.0.obs;
+  String price = "1000";
+  RxDouble priceAfterRatio = 0.0.obs;
+  RxDouble walletNew = 0.0.obs;
+  GetWallteAndRatio(String idThe) async {
+    var response = await crud
+        .postRequest(AppLinksApi.getDataRatio, {'id': idThe.toString()});
+    if (response['status'] == "success") {
+      wallet.value = double.parse(response['data'][0]['wallet'].toString());
+      ratioS.value = double.parse((response['data'][0]['ratio'].toString()));
+
+      return response;
+    }
   }
 }

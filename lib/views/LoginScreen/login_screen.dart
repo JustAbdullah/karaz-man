@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -34,7 +35,7 @@ class Login extends StatelessWidget {
               Align(
                 alignment: Alignment.topCenter,
                 child: TextCustom(
-                    theText: "تسجيل الدخول",
+                    theText: "1-تسجيل الدخول".tr,
                     fontSizeWidth: 23,
                     fontFamily: AppTextStyles.Almarai,
                     fontColor: AppColors.blackColorsTypeOne),
@@ -47,7 +48,7 @@ class Login extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 50.w),
                   child: Text(
-                    "لطفًا  قم بإدخال البيانات التالية لتسجيل دخولك",
+                    "2-لطفًا  قم بإدخال البيانات التالية لتسجيل دخولك".tr,
                     style: TextStyle(
                         height: 1.5.h,
                         fontSize: 15.5.sp,
@@ -63,12 +64,15 @@ class Login extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30.w),
                 child: TextFormFiledCustom(
-                  labelData: "رمز الدخول",
-                  hintData: "رمز الدخول",
+                  labelData: "3-رمز الدخول".tr,
+                  hintData: "3-رمز الدخول".tr,
                   iconData: Icons.password,
                   controllerData: appController.passwordAuthLoginController,
                   value: (value) {
+                    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+                        overlays: []);
                     appController.passwordAuthLogin.value = value.toString();
+
                     return value;
                   },
                   fillColor: AppColors.whiteColor,
@@ -80,6 +84,8 @@ class Login extends StatelessWidget {
                   keyboardType: TextInputType.text,
                   autofillHints: [AutofillHints.name],
                   onChanged: (value) {
+                    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+                        overlays: []);
                     appController.passwordAuthLogin.value = value.toString();
                     return value;
                   },
@@ -115,7 +121,7 @@ class Login extends StatelessWidget {
                   heigthContainer: 40,
                   child: Center(
                     child: Text(
-                      "تسجيل الدخول الان",
+                      "4-تسجيل الدخول الان".tr,
                       style: TextStyle(
                           fontSize: 16,
                           fontFamily: AppTextStyles.Almarai,
@@ -152,9 +158,11 @@ class Login extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Lottie.asset(ImagesPath.loadingServices, width: 140.w),
+                        Lottie.asset(ImagesPath.loadingAppOpeartions,
+                            width: 140.w),
                         Text(
-                          "انتظر قليلاً يتم تسجيل الدخول  والتاكد من البيانات ",
+                          "5-انتظر قليلاً يتم تسجيل الدخول  والتاكد من البيانات"
+                              .tr,
                           style: TextStyle(
                             color: AppColors.whiteColor,
                             fontFamily: AppTextStyles.Almarai,
@@ -195,7 +203,8 @@ class Login extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20.w),
                             child: Text(
-                              "عزيزي المستخدم تم تسجيل الدخول بنجاح,,قم بالضغط على الزر للتوجة للرئيسية",
+                              "6-عزيزي المستخدم تم تسجيل الدخول بنجاح,,قم بالضغط على الزر للتوجة للرئيسية"
+                                  .tr,
                               style: TextStyle(
                                 height: 1.7.h,
                                 color: AppColors.whiteColor,
@@ -219,7 +228,7 @@ class Login extends StatelessWidget {
                               colorContainer: AppColors.yellowColor,
                               child: Center(
                                 child: TextCustom(
-                                    theText: "التوجة الان",
+                                    theText: "7-التوجة الان".tr,
                                     fontSizeWidth: 20,
                                     fontFamily: AppTextStyles.Almarai,
                                     fontColor: AppColors.balckColorTypeThree),
@@ -257,11 +266,11 @@ class Login extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Lottie.asset(ImagesPath.error, width: 140.w),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20.w),
                             child: Text(
-                              "عزيزي المستخدم اسم المستخدم او كلمة المرور خاطئة,,الرجاء التاكد من صحتهم",
+                              "8-عزيزي المستخدم اسم المستخدم او كلمة المرور خاطئة,,الرجاء التاكد من صحتهم"
+                                  .tr,
                               style: TextStyle(
                                 height: 1.7.h,
                                 color: AppColors.whiteColor,
@@ -285,7 +294,7 @@ class Login extends StatelessWidget {
                                 colorContainer: AppColors.yellowColor,
                                 child: Center(
                                   child: TextCustom(
-                                      theText: "الاخفاء",
+                                      theText: "9-الاخفاء".tr,
                                       fontSizeWidth: 20,
                                       fontFamily: AppTextStyles.Almarai,
                                       fontColor: AppColors.balckColorTypeThree),

@@ -24,7 +24,7 @@ class SaveLocation extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30.w),
                 child: Text(
-                  "اضغط على الزر لحفظ ومشاهدة موقعك الحالي لعرض الطلبات القريبة منك.."
+                  "10-اضغط على الزر لحفظ  موقعك الحالي لعرض الطلبات القريبة منك.."
                       .tr,
                   style: TextStyle(
                       height: 1.3.h,
@@ -52,7 +52,7 @@ class SaveLocation extends StatelessWidget {
                   ),
                   child: Center(
                     child: TextCustom(
-                        theText: "فحص وحفظ الموقع",
+                        theText: "11-فحص وحفظ الموقع".tr,
                         fontSizeWidth: 20,
                         fontFamily: AppTextStyles.Almarai,
                         fontColor: AppColors.whiteColor),
@@ -77,7 +77,8 @@ class SaveLocation extends StatelessWidget {
                     ),
                     Align(
                         alignment: Alignment.center,
-                        child: Lottie.asset(ImagesPath.loadingAppOpeartions))
+                        child: Lottie.asset(ImagesPath.loadingAppOpeartions,
+                            width: 100.w))
                   ])))
         ],
       ),

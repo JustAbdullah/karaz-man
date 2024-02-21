@@ -55,7 +55,7 @@ class OrdersDetails extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "103-التفاصيل النهائية للطلبية".tr,
+                              "24-التفاصيل النهائية للطلبية".tr,
                               style: TextStyle(
                                   height: 1.3.h,
                                   fontSize: 17,
@@ -114,7 +114,7 @@ class OrdersDetails extends StatelessWidget {
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 30.w),
                               child: Text(
-                                "استلام العمل".tr,
+                                "25-استلام العمل".tr,
                                 style: TextStyle(
                                     height: 2.h,
                                     fontSize: 15.sp,
@@ -138,7 +138,7 @@ class OrdersDetails extends StatelessWidget {
                               color: AppColors.balckColorTypeFour,
                               borderRadius: BorderRadius.circular(5)),
                           child: Text(
-                            "60-التفاصيل العامة".tr,
+                            "26-التفاصيل العامة".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15,
@@ -158,7 +158,7 @@ class OrdersDetails extends StatelessWidget {
                           child: Row(
                             children: [
                               Text(
-                                "61-نوع الخدمة:".tr,
+                                "27-نوع الخدمة:".tr,
                                 style: TextStyle(
                                     height: 1.3.h,
                                     fontSize: 15,
@@ -222,7 +222,7 @@ class OrdersDetails extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              "62-رقم الطلبية:".tr,
+                              "28-رقم الطلبية:".tr,
                               style: TextStyle(
                                   height: 1.3.h,
                                   fontSize: 15,
@@ -264,7 +264,7 @@ class OrdersDetails extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              "63-إجمالي الطلبية:".tr,
+                              "29-إجمالي الطلبية:".tr,
                               style: TextStyle(
                                   height: 1.3.h,
                                   fontSize: 15,
@@ -328,7 +328,7 @@ class OrdersDetails extends StatelessWidget {
                               color: AppColors.balckColorTypeFour,
                               borderRadius: BorderRadius.circular(5)),
                           child: Text(
-                            "64-تفاصيل أنواع الخدمة المقدمة".tr,
+                            "30-تفاصيل أنواع الخدمة المقدمة".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15,
@@ -351,7 +351,7 @@ class OrdersDetails extends StatelessWidget {
                                       false
                                   ? Center(
                                       child: Text(
-                                        "65-لاتمتلك اي تفرعات لعرضها".tr,
+                                        "31-لاتمتلك اي تفرعات لعرضها".tr,
                                         style: TextStyle(
                                           height: 1.5.h,
                                           color: AppColors.blackColor,
@@ -599,7 +599,7 @@ class OrdersDetails extends StatelessWidget {
                                                             theTop: 30,
                                                             child: TextCustom(
                                                               theText:
-                                                                  "6-يتم التحميل"
+                                                                  "19-يتم التحميل"
                                                                       .tr,
                                                               fontColor: AppColors
                                                                   .blackColor,
@@ -619,7 +619,7 @@ class OrdersDetails extends StatelessWidget {
                                                           child: PaddingCustom(
                                                             theTop: 15,
                                                             child: Text(
-                                                              "6-يتم التحميل"
+                                                              "19-يتم التحميل"
                                                                   .tr,
                                                               maxLines: 4,
                                                               style: TextStyle(
@@ -669,7 +669,7 @@ class OrdersDetails extends StatelessWidget {
                                                                           horizontal:
                                                                               8.h),
                                                                   child: Text(
-                                                                    "6-يتم التحميل"
+                                                                    "19-يتم التحميل"
                                                                         .tr,
                                                                     style:
                                                                         TextStyle(
@@ -711,7 +711,7 @@ class OrdersDetails extends StatelessWidget {
                               color: AppColors.balckColorTypeFour,
                               borderRadius: BorderRadius.circular(5)),
                           child: Text(
-                            "66-عملية الجدولة".tr,
+                            "32-عملية الجدولة".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15,
@@ -729,8 +729,7 @@ class OrdersDetails extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              "104-هذه هي الجدولة التى قمت بإختيارها..في حال وُجد اي تغيير سيتم إشعارك بوقت مناسب لذلك"
-                                  .tr,
+                              "33-هذه هي الجدولة التى تم إختيارها ".tr,
                               style: TextStyle(
                                   height: 1.3.h,
                                   fontSize: 12,
@@ -748,7 +747,7 @@ class OrdersDetails extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "105-تاريخ الجدولة المُدخل:".tr,
+                            "34-تاريخ الجدولة المُدخل:".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15.sp,
@@ -775,7 +774,7 @@ class OrdersDetails extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "106-وقت الجدولة المُدخل:".tr,
+                            "35-وقت الجدولة المُدخل:".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15.sp,
@@ -811,7 +810,7 @@ class OrdersDetails extends StatelessWidget {
                               color: AppColors.balckColorTypeFour,
                               borderRadius: BorderRadius.circular(5)),
                           child: Text(
-                            "72-آلية الدفع".tr,
+                            "36-آلية الدفع".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15.sp,
@@ -829,7 +828,7 @@ class OrdersDetails extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              "107-هذة الألية المُختارة لعملية الدفع مقابل الخدمة"
+                              "37-هذة الألية المُختارة لعملية الدفع مقابل الخدمة"
                                   .tr,
                               style: TextStyle(
                                   height: 1.3.h,
@@ -848,7 +847,7 @@ class OrdersDetails extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "108-آلية الدفع المُختارة:".tr,
+                            "38-آلية الدفع المُختارة:".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15.sp,
@@ -858,8 +857,8 @@ class OrdersDetails extends StatelessWidget {
                           ),
                           Text(
                             controller.theWayToPayTheOrder == "1"
-                                ? "109-دفع كاش-نقدي".tr
-                                : "110-دفع عبر البطاقة-إلكتروني".tr,
+                                ? "39-دفع كاش-نقدي".tr
+                                : "40-دفع عبر البطاقة-إلكتروني".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15.sp,
@@ -883,7 +882,7 @@ class OrdersDetails extends StatelessWidget {
                               color: AppColors.balckColorTypeFour,
                               borderRadius: BorderRadius.circular(5)),
                           child: Text(
-                            "الموقع".tr,
+                            "41-الموقع".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15,
@@ -904,7 +903,7 @@ class OrdersDetails extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              "الموقع الذي سيتم تقديم الخدمة فيه".tr,
+                              "43-الموقع الذي سيتم تقديم الخدمة فيه".tr,
                               style: TextStyle(
                                   height: 1.3.h,
                                   fontSize: 12,
@@ -966,7 +965,7 @@ class OrdersDetails extends StatelessWidget {
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20.w),
                               child: Text(
-                                "مشاهدة الموقع".tr,
+                                "44-مشاهدة الموقع".tr,
                                 style: TextStyle(
                                     height: 1.3.h,
                                     fontSize: 15,
@@ -990,7 +989,7 @@ class OrdersDetails extends StatelessWidget {
                               color: AppColors.balckColorTypeFour,
                               borderRadius: BorderRadius.circular(5)),
                           child: Text(
-                            "80-تفاصيل أخرى".tr,
+                            "45-تفاصيل أخرى".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15,
@@ -1011,7 +1010,7 @@ class OrdersDetails extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              "111-التفاصيل الإضافية(نص مُدخل-صورة مُدخلة) حسب الرغبة"
+                              "46-التفاصيل الإضافية(نص مُدخل-صورة مُدخلة) حسب الرغبة"
                                   .tr,
                               style: TextStyle(
                                   height: 1.3.h,

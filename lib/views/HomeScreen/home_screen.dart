@@ -8,7 +8,9 @@ import 'MenuWidget/menu_widget.dart';
 import 'MyOrdersWidgets/my_order_details.dart';
 import 'MyOrdersWidgets/my_orders_list.dart';
 import 'SettingsWidgets/info_account.dart';
+import 'SettingsWidgets/lang.dart';
 import 'SettingsWidgets/settings_screen.dart';
+import 'SettingsWidgets/show_my_location.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -30,6 +32,8 @@ class HomeScreen extends StatelessWidget {
               MyOrdersDetails(),
               SettingsMenu(),
               InfoAcount(),
+              Lang(),
+              ShowTheMyLocation(),
               Align(alignment: Alignment.center, child: ShowTheLocation()),
             ],
           ),

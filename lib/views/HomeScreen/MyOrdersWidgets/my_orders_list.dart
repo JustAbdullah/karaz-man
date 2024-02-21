@@ -55,7 +55,7 @@ class MyOrdersList extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "طلبياتك المختارة",
+                                    "20-طلبياتك المختارة".tr,
                                     style: TextStyle(
                                         height: 1.3.h,
                                         fontSize: 19,
@@ -80,7 +80,7 @@ class MyOrdersList extends StatelessWidget {
                                             false
                                         ? Center(
                                             child: Text(
-                                              "لاتمتلك اي طلبيات لعرضها".tr,
+                                              "13-لاتمتلك اي طلبيات لعرضها".tr,
                                               style: TextStyle(
                                                 height: 1.5.h,
                                                 color: AppColors.blackColor,
@@ -145,7 +145,7 @@ class MyOrdersList extends StatelessWidget {
                                                                             .start,
                                                                     children: [
                                                                       Text(
-                                                                        "نوع الخدمة:"
+                                                                        "14-نوع الخدمة:"
                                                                             .tr,
                                                                         style:
                                                                             TextStyle(
@@ -191,7 +191,7 @@ class MyOrdersList extends StatelessWidget {
                                                                           .start,
                                                                   children: [
                                                                     Text(
-                                                                      "رقم هذة الطلبية:"
+                                                                      "15-رقم هذة الطلبية:"
                                                                           .tr,
                                                                       style:
                                                                           TextStyle(
@@ -242,7 +242,7 @@ class MyOrdersList extends StatelessWidget {
                                                                 Row(
                                                                   children: [
                                                                     Text(
-                                                                      "إجمالي سعر هذة الطلبية:"
+                                                                      "16-إجمالي سعر هذة الطلبية:"
                                                                           .tr,
                                                                       style:
                                                                           TextStyle(
@@ -313,7 +313,8 @@ class MyOrdersList extends StatelessWidget {
                                                                 Row(
                                                                   children: [
                                                                     Text(
-                                                                      "تفاصيل الطلبية",
+                                                                      "17-تفاصيل الطلبية"
+                                                                          .tr,
                                                                       style:
                                                                           TextStyle(
                                                                         height:
@@ -389,6 +390,13 @@ class MyOrdersList extends StatelessWidget {
                                                                             .data['data'][i]['token']
                                                                             .toString();
 
+                                                                        controller.idUser = snapshot
+                                                                            .data['data'][i]['user_id']
+                                                                            .toString();
+                                                                        controller.nameUser = snapshot
+                                                                            .data['data'][i]['user_name']
+                                                                            .toString();
+
                                                                         controller
                                                                             .showMyOrderTheDetails
                                                                             .value = true;
@@ -412,7 +420,7 @@ class MyOrdersList extends StatelessWidget {
                                                                               EdgeInsets.symmetric(horizontal: 10.w),
                                                                           child:
                                                                               Text(
-                                                                            "48-مشاهدة التفاصيل".tr,
+                                                                            "18-مشاهدة التفاصيل".tr,
                                                                             style:
                                                                                 TextStyle(
                                                                               height: 1.5.h,
@@ -496,7 +504,7 @@ class MyOrdersList extends StatelessWidget {
                                                                   child:
                                                                       TextCustom(
                                                                     theText:
-                                                                        "6-يتم التحميل"
+                                                                        "19-يتم التحميل"
                                                                             .tr,
                                                                     fontColor:
                                                                         AppColors
@@ -519,7 +527,7 @@ class MyOrdersList extends StatelessWidget {
                                                                     PaddingCustom(
                                                                   theTop: 15,
                                                                   child: Text(
-                                                                    "6-يتم التحميل"
+                                                                    "19-يتم التحميل"
                                                                         .tr,
                                                                     maxLines: 4,
                                                                     style: TextStyle(
@@ -571,7 +579,7 @@ class MyOrdersList extends StatelessWidget {
                                                                             EdgeInsets.symmetric(horizontal: 8.h),
                                                                         child:
                                                                             Text(
-                                                                          "6-يتم التحميل"
+                                                                          "19-يتم التحميل"
                                                                               .tr,
                                                                           style:
                                                                               TextStyle(

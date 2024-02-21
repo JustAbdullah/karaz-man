@@ -4,13 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:services_man_karaz/views/HomeScreen/home_screen.dart';
+import 'package:services_man_karaz/views/LoadingScreen/loading_screen.dart';
+import 'package:services_man_karaz/views/testinf.dart';
 import 'core/constant/color_primary.dart';
 import 'core/localization/changelanguage.dart';
 import 'core/localization/translation.dart';
 import 'core/services/appservices.dart';
 import 'firebase_options.dart';
-import 'views/LoginScreen/login_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -72,11 +72,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       locale: chagnelangcontroller.language,
       translations: AppTranslation(),
-      title: "Karaz",
+      title: "Services Man Karaz",
       home: const Scaffold(
           body: SafeArea(
-              child:
-                  ScreenUtilInit(designSize: Size(360, 690), child: Login()))),
+              child: ScreenUtilInit(
+                  designSize: Size(360, 690), child: LoadingScreen()))),
       theme: ThemeData(primarySwatch: ModeColor.mode),
       builder: (context, child) {
         final mediaQueryData = MediaQuery.of(context);

@@ -38,7 +38,7 @@ class MenuWidget extends StatelessWidget {
                           height: 40.h,
                           child: Center(
                             child: Text(
-                              "الطلبات العامة",
+                              "21-الطلبات العامة".tr,
                               style: TextStyle(
                                 height: 1.5.h,
                                 color: AppColors.blackColor,
@@ -70,7 +70,7 @@ class MenuWidget extends StatelessWidget {
                           height: 40.h,
                           child: Center(
                             child: Text(
-                              "طلباتك",
+                              "22-طلباتك".tr,
                               style: TextStyle(
                                 height: 1.5.h,
                                 color: AppColors.blackColor,
@@ -103,7 +103,7 @@ class MenuWidget extends StatelessWidget {
                           height: 40.h,
                           child: Center(
                             child: Text(
-                              "الاعدادت",
+                              "23-الاعدادت".tr,
                               style: TextStyle(
                                 height: 1.5.h,
                                 color: AppColors.blackColor,

@@ -81,7 +81,7 @@ class ShowTheLocation extends StatelessWidget {
                           Align(
                               alignment: Alignment.center,
                               child: Text(
-                                "الموقع على الخريطة".tr,
+                                "Location".tr,
                                 style: TextStyle(
                                     height: 1.3.h,
                                     fontSize: 19,

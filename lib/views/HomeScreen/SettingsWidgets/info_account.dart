@@ -38,7 +38,7 @@ class InfoAcount extends StatelessWidget {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10)),
                         width: MediaQuery.of(context).size.width,
-                        height: 400.h,
+                        height: 600.h,
                         child: SingleChildScrollView(
                             child: Column(children: [
                           Align(
@@ -74,7 +74,7 @@ class InfoAcount extends StatelessWidget {
                           Align(
                               alignment: Alignment.center,
                               child: Text(
-                                "38-معلومات الحساب".tr,
+                                "65-معلومات الحساب".tr,
                                 style: TextStyle(
                                     height: 1.3.h,
                                     fontSize: 19,
@@ -99,7 +99,7 @@ class InfoAcount extends StatelessWidget {
                                     colorContainer: AppColors.theMainColor,
                                     child: Center(
                                       child: TextCustom(
-                                          theText: "39-الاسم:".tr,
+                                          theText: "66-الاسم:".tr,
                                           fontSizeWidth: 17,
                                           fontFamily: AppTextStyles.Almarai,
                                           fontColor: AppColors.whiteColor),
@@ -139,7 +139,7 @@ class InfoAcount extends StatelessWidget {
                                       colorContainer: AppColors.theMainColor,
                                       child: Center(
                                         child: TextCustom(
-                                            theText: "40-رقم الهاتف:".tr,
+                                            theText: "67-رقم الهاتف:".tr,
                                             fontSizeWidth: 17,
                                             fontFamily: AppTextStyles.Almarai,
                                             fontColor: AppColors.whiteColor),
@@ -162,6 +162,9 @@ class InfoAcount extends StatelessWidget {
                                       fontColor: AppColors.blackColorTypeTeo),
                                 ],
                               )),
+                          SizedBox(
+                            height: 20.h,
+                          ),
                           Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20.w),
                               child: Row(
@@ -175,7 +178,7 @@ class InfoAcount extends StatelessWidget {
                                       colorContainer: AppColors.theMainColor,
                                       child: Center(
                                         child: TextCustom(
-                                            theText: "40-الخدمة المقدمة:".tr,
+                                            theText: "68-الخدمة المقدمة:".tr,
                                             fontSizeWidth: 17,
                                             fontFamily: AppTextStyles.Almarai,
                                             fontColor: AppColors.whiteColor),
@@ -194,6 +197,86 @@ class InfoAcount extends StatelessWidget {
                                   TextCustom(
                                       theText: controllerTheApp
                                           .theNameOFServiceType.value,
+                                      fontSizeWidth: 20,
+                                      fontFamily: AppTextStyles.Almarai,
+                                      fontColor: AppColors.blackColorTypeTeo),
+                                ],
+                              )),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.w),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  ContainerCustom(
+                                      widthContainer: 150,
+                                      heigthContainer: 40,
+                                      theBorderRadius: 10,
+                                      colorContainer: AppColors.theMainColor,
+                                      child: Center(
+                                        child: TextCustom(
+                                            theText: "80-المبلغ في المحفظة:".tr,
+                                            fontSizeWidth: 17,
+                                            fontFamily: AppTextStyles.Almarai,
+                                            fontColor: AppColors.whiteColor),
+                                      ))
+                                ],
+                              )),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.w),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  TextCustom(
+                                      theText: controllerTheApp.wallet.value
+                                          .toString(),
+                                      fontSizeWidth: 20,
+                                      fontFamily: AppTextStyles.Almarai,
+                                      fontColor: AppColors.blackColorTypeTeo),
+                                ],
+                              )),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.w),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  ContainerCustom(
+                                      widthContainer: 150,
+                                      heigthContainer: 40,
+                                      theBorderRadius: 10,
+                                      colorContainer: AppColors.theMainColor,
+                                      child: Center(
+                                        child: TextCustom(
+                                            theText: "81-نسبة العمولة :".tr,
+                                            fontSizeWidth: 17,
+                                            fontFamily: AppTextStyles.Almarai,
+                                            fontColor: AppColors.whiteColor),
+                                      ))
+                                ],
+                              )),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.w),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  TextCustom(
+                                      theText: controllerTheApp.ratioS.value
+                                          .toString(),
                                       fontSizeWidth: 20,
                                       fontFamily: AppTextStyles.Almarai,
                                       fontColor: AppColors.blackColorTypeTeo),

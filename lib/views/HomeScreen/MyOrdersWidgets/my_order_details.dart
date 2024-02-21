@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
@@ -61,7 +62,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "103-التفاصيل النهائية للطلبية".tr,
+                              "24-التفاصيل النهائية للطلبية".tr,
                               style: TextStyle(
                                   height: 1.3.h,
                                   fontSize: 17,
@@ -110,7 +111,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                               color: AppColors.balckColorTypeFour,
                               borderRadius: BorderRadius.circular(5)),
                           child: Text(
-                            "تفاصيل حول مزود الخدمة".tr,
+                            "47-تفاصيل حول مزود الخدمة".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15,
@@ -127,6 +128,9 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                         onTap: () {
                           controller.sendNo(controller.tokenTheUser.toString(),
                               "عزيزي العميل لقد وصل الفني إلى موقعك الرجاء التواصل معه");
+                          controller.sendMessage(
+                              "عزيزي العميل لقد وصل الفني إلى موقعك الرجاء التواصل معه",
+                              controller.idUser.toString());
                           controller.AddNotice(
                               "لقد وصل الفني ${controller.Name.value} الى موقع العميل للقيام بالخدمة التى تحمل رقم:${controller.numberOfOrder}");
                         },
@@ -145,7 +149,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20.w),
                               child: Text(
-                                "ارسال أشعار الوصول للموقع".tr,
+                                "48-ارسال أشعار الوصول للموقع".tr,
                                 style: TextStyle(
                                     height: 1.3.h,
                                     fontSize: 15,
@@ -164,12 +168,35 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                           controller.endTheOrder(
                               controller.idOfOrder.toString(),
                               controller.tokenTheUser.toString(),
-                              "عزيزي العميل لقد أتم العميل الخدمة بنجاح نرجو ان تكون نالت على إعجابك");
+                              "عزيزي العميل لقد أتم الفني الخدمة بنجاح نرجو ان تكون نالت على إعجابك");
+                          controller.sendMessage(
+                              "عزيزي العميل لقد أتم الفني الخدمة بنجاح نرجو ان تكون نالت على إعجابك",
+                              controller.idUser.toString());
                           controller.showMyOrderTheDetails.value = false;
                           controller.showMyTheOrderPage.value = false;
 
                           controller.AddNotice(
                               "لقد اتم الفني ${controller.Name.value} الخدمة بنجاح التى تحمل رقم:${controller.numberOfOrder}");
+
+                          controller.savePdf(
+                              controller.numberOfOrder,
+                              controller.Name.value,
+                              controller.nameUser,
+                              "${controller.totalOfOrder} AED",
+                              controller.nameOfMainTypeOrder,
+                              controller.idUser);
+
+                          controller.priceAfterRatio.value =
+                              (double.tryParse(controller.totalOfOrder)! *
+                                      controller.ratioS.value) /
+                                  100;
+
+                          controller.walletNew.value =
+                              controller.priceAfterRatio.value +
+                                  controller.wallet.value;
+
+                          controller.changeWallet(
+                              controller.walletNew.value.toString());
                         },
                         child: Container(
                             alignment: Alignment.center,
@@ -186,7 +213,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 30.w),
                               child: Text(
-                                "تم العمل",
+                                "49-تم العمل".tr,
                                 style: TextStyle(
                                     height: 2.h,
                                     fontSize: 15.sp,
@@ -208,7 +235,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              "الخدمات الإضافية المقدمة لهذة الطلبية".tr,
+                              "50-الخدمات الإضافية المقدمة لهذة الطلبية".tr,
                               style: TextStyle(
                                   height: 1.3.h,
                                   fontSize: 15.sp,
@@ -239,7 +266,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                                               CrossAxisAlignment.center,
                                           children: [
                                               Text(
-                                                "5-لايوجد بيانات".tr,
+                                                "51-لايوجد بيانات".tr,
                                                 style: TextStyle(
                                                     fontFamily: 'Cairo',
                                                     color: Color(0xFFC70039),
@@ -416,7 +443,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                                                                         7),
                                                             child: Center(
                                                               child: Text(
-                                                                "5-لايوجد بيانات"
+                                                                "51-لايوجد بيانات"
                                                                     .tr,
                                                                 style: TextStyle(
                                                                     fontFamily:
@@ -441,6 +468,45 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                       SizedBox(
                         height: 20.h,
                       ),
+                      InkWell(
+                        onTap: () {
+                          if (controller.anotherTask.value == true) {
+                            controller.anotherTask.value = false;
+                          } else {
+                            controller.anotherTask.value = true;
+                          }
+                        },
+                        child: Container(
+                            alignment: Alignment.center,
+                            height: 50.h,
+                            width: 300.w,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: controller.anotherTask.value == true
+                                    ? AppColors.theMainColor
+                                    : AppColors.whiteColor,
+                                border: Border.all(
+                                  color: AppColors
+                                      .theMainColor, //                   <--- border color
+                                  width: 1.5,
+                                )),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 30.w),
+                              child: Text(
+                                "77-مهمة أخرى".tr,
+                                style: TextStyle(
+                                    height: 2.h,
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: AppTextStyles.Almarai,
+                                    color: AppColors.balckColorTypeFour),
+                                textAlign: TextAlign.center,
+                              ),
+                            )),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
                       /////////////////////////////
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 40.w),
@@ -453,13 +519,21 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                             controller: homeController.newPricdeCotroller,
                             onChanged: (value) {
                               controller.newPriceText = value.toString();
+                              SystemChrome.setEnabledSystemUIMode(
+                                  SystemUiMode.manual,
+                                  overlays: []);
                             },
                             onSaved: (newValue) {
+                                SystemChrome
+                                                          .setEnabledSystemUIMode(
+                                                              SystemUiMode
+                                                                  .manual,
+                                                              overlays: []);
                               controller.newPriceText = newValue.toString();
                             },
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
-                                hintText: "السعر الجديد".tr,
+                                hintText: "52-السعر الجديد".tr,
                                 // important line
                                 // control your hints text size
                                 hintStyle: TextStyle(
@@ -487,12 +561,35 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                               controller.idOfOrder.toString(),
                               controller.newPriceText.toString(),
                               controller.tokenTheUser.toString(),
-                              "عزيزي العميل لقد قام العميل بإتمام الخدمة بنجاح نرجو أن تكون نالت على إعجابك");
+                              "عزيزي العميل لقد قام الفني بإتمام الخدمة بنجاح نرجو أن تكون نالت على إعجابك");
+                          controller.sendMessage(
+                              "عزيزي العميل لقد أتم الفني الخدمة بنجاح نرجو ان تكون نالت على إعجابك",
+                              controller.idUser.toString());
                           controller.showMyOrderTheDetails.value = false;
                           controller.showMyTheOrderPage.value = false;
 
                           controller.AddNotice(
                               "لقد اتم الفني ${controller.Name.value} الخدمة بنجاح التى تحمل رقم:${controller.numberOfOrder} مع إضافة تسعيرة جديدة حيث قام  بمهام مختلفة تطلب سعر جديد والسعر الجديد هو:${controller.newPriceText.toString()} ");
+
+                          controller.savePdf(
+                              controller.numberOfOrder,
+                              controller.Name.value,
+                              controller.nameUser,
+                              controller.newPriceText,
+                              controller.nameOfMainTypeOrder,
+                              controller.idUser);
+
+                          controller.priceAfterRatio.value =
+                              (double.tryParse(controller.newPriceText)! *
+                                      controller.ratioS.value) /
+                                  100;
+
+                          controller.walletNew.value =
+                              controller.priceAfterRatio.value +
+                                  controller.wallet.value;
+
+                          controller.changeWallet(
+                              controller.walletNew.value.toString());
                         },
                         child: Container(
                             alignment: Alignment.center,
@@ -509,7 +606,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 30.w),
                               child: Text(
-                                " تم العمل مع السعر الجديد".tr,
+                                "53-تم العمل مع السعر الجديد".tr,
                                 style: TextStyle(
                                     height: 2.h,
                                     fontSize: 15.sp,
@@ -533,7 +630,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                               color: AppColors.balckColorTypeFour,
                               borderRadius: BorderRadius.circular(5)),
                           child: Text(
-                            "التاجيل-او الالغاء".tr,
+                            "54-التاجيل-او الالغاء".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15,
@@ -555,6 +652,9 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                               "لقد قام الفني ${controller.Name.value} بتأجيل القيام بالخدمة التى تحمل رقم:${controller.numberOfOrder}");
                           controller.sendNo(controller.tokenTheUser.toString(),
                               "عزيزي العميل لقد تم تاجيل موعد تقديم الخدمة كونها قد تحتاج لقطع أضافية او امور أخرى");
+                          controller.sendMessage(
+                              "عزيزي العميل لقد تم تاجيل موعد تقديم الخدمة كونها قد تحتاج لقطع أضافية او امور أخرى",
+                              controller.idUser.toString());
 
                           controller.showMyOrderTheDetails.value = false;
                           controller.showMyTheOrderPage.value = false;
@@ -574,7 +674,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 30.w),
                               child: Text(
-                                "تاجيل الموعد".tr,
+                                "55-تاجيل الموعد".tr,
                                 style: TextStyle(
                                     height: 2.h,
                                     fontSize: 15.sp,
@@ -613,7 +713,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 30.w),
                               child: Text(
-                                "إلغاء العمل ".tr,
+                                "56-إلغاء العمل".tr,
                                 style: TextStyle(
                                     height: 2.h,
                                     fontSize: 15.sp,
@@ -637,7 +737,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                               color: AppColors.balckColorTypeFour,
                               borderRadius: BorderRadius.circular(5)),
                           child: Text(
-                            "60-التفاصيل العامة".tr,
+                            "26-التفاصيل العامة".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15,
@@ -657,7 +757,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                           child: Row(
                             children: [
                               Text(
-                                "61-نوع الخدمة:".tr,
+                                "27-نوع الخدمة:".tr,
                                 style: TextStyle(
                                     height: 1.3.h,
                                     fontSize: 15,
@@ -721,7 +821,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                         child: Row(
                           children: [
                             Text(
-                              "62-رقم الطلبية:".tr,
+                              "28-رقم الطلبية:".tr,
                               style: TextStyle(
                                   height: 1.3.h,
                                   fontSize: 15,
@@ -763,7 +863,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                         child: Row(
                           children: [
                             Text(
-                              "63-إجمالي الطلبية:".tr,
+                              "29-إجمالي الطلبية:".tr,
                               style: TextStyle(
                                   height: 1.3.h,
                                   fontSize: 15,
@@ -827,7 +927,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                               color: AppColors.balckColorTypeFour,
                               borderRadius: BorderRadius.circular(5)),
                           child: Text(
-                            "64-تفاصيل أنواع الخدمة المقدمة".tr,
+                            "30-تفاصيل أنواع الخدمة المقدمة".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15,
@@ -850,7 +950,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                                       false
                                   ? Center(
                                       child: Text(
-                                        "65-لاتمتلك اي تفرعات لعرضها".tr,
+                                        "31-لاتمتلك اي تفرعات لعرضها".tr,
                                         style: TextStyle(
                                           height: 1.5.h,
                                           color: AppColors.blackColor,
@@ -1098,7 +1198,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                                                             theTop: 30,
                                                             child: TextCustom(
                                                               theText:
-                                                                  "6-يتم التحميل"
+                                                                  "19-يتم التحميل"
                                                                       .tr,
                                                               fontColor: AppColors
                                                                   .blackColor,
@@ -1118,7 +1218,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                                                           child: PaddingCustom(
                                                             theTop: 15,
                                                             child: Text(
-                                                              "6-يتم التحميل"
+                                                              "19-يتم التحميل"
                                                                   .tr,
                                                               maxLines: 4,
                                                               style: TextStyle(
@@ -1168,7 +1268,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                                                                           horizontal:
                                                                               8.h),
                                                                   child: Text(
-                                                                    "6-يتم التحميل"
+                                                                    "19-يتم التحميل"
                                                                         .tr,
                                                                     style:
                                                                         TextStyle(
@@ -1210,7 +1310,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                               color: AppColors.balckColorTypeFour,
                               borderRadius: BorderRadius.circular(5)),
                           child: Text(
-                            "66-عملية الجدولة".tr,
+                            "32-عملية الجدولة".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15,
@@ -1228,8 +1328,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              "104-هذه هي الجدولة التى قمت بإختيارها..في حال وُجد اي تغيير سيتم إشعارك بوقت مناسب لذلك"
-                                  .tr,
+                              "33-هذه هي الجدولة التى تم إختيارها ".tr,
                               style: TextStyle(
                                   height: 1.3.h,
                                   fontSize: 12,
@@ -1247,7 +1346,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "105-تاريخ الجدولة المُدخل:".tr,
+                            "34-تاريخ الجدولة المُدخل:".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15.sp,
@@ -1274,7 +1373,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "106-وقت الجدولة المُدخل:".tr,
+                            "35-وقت الجدولة المُدخل:".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15.sp,
@@ -1310,7 +1409,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                               color: AppColors.balckColorTypeFour,
                               borderRadius: BorderRadius.circular(5)),
                           child: Text(
-                            "72-آلية الدفع".tr,
+                            "36-آلية الدفع".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15.sp,
@@ -1328,7 +1427,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              "107-هذة الألية المُختارة لعملية الدفع مقابل الخدمة"
+                              "37-هذة الألية المُختارة لعملية الدفع مقابل الخدمة"
                                   .tr,
                               style: TextStyle(
                                   height: 1.3.h,
@@ -1347,7 +1446,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "108-آلية الدفع المُختارة:".tr,
+                            "38-آلية الدفع المُختارة:".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15.sp,
@@ -1357,8 +1456,8 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                           ),
                           Text(
                             controller.theWayToPayTheOrder == "1"
-                                ? "109-دفع كاش-نقدي".tr
-                                : "110-دفع عبر البطاقة-إلكتروني".tr,
+                                ? "39-دفع كاش-نقدي".tr
+                                : "40-دفع عبر البطاقة-إلكتروني".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15.sp,
@@ -1382,7 +1481,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                               color: AppColors.balckColorTypeFour,
                               borderRadius: BorderRadius.circular(5)),
                           child: Text(
-                            "الموقع".tr,
+                            "41-الموقع".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15,
@@ -1403,7 +1502,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              "الموقع الذي سيتم تقديم الخدمة فيه".tr,
+                              "43-الموقع الذي سيتم تقديم الخدمة فيه".tr,
                               style: TextStyle(
                                   height: 1.3.h,
                                   fontSize: 12,
@@ -1465,7 +1564,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20.w),
                               child: Text(
-                                "مشاهدة الموقع".tr,
+                                "44-مشاهدة الموقع".tr,
                                 style: TextStyle(
                                     height: 1.3.h,
                                     fontSize: 15,
@@ -1489,7 +1588,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                               color: AppColors.balckColorTypeFour,
                               borderRadius: BorderRadius.circular(5)),
                           child: Text(
-                            "80-تفاصيل أخرى".tr,
+                            "45-تفاصيل أخرى".tr,
                             style: TextStyle(
                                 height: 1.3.h,
                                 fontSize: 15,
@@ -1510,7 +1609,7 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              "111-التفاصيل الإضافية(نص مُدخل-صورة مُدخلة) حسب الرغبة"
+                              "46-التفاصيل الإضافية(نص مُدخل-صورة مُدخلة) حسب الرغبة"
                                   .tr,
                               style: TextStyle(
                                   height: 1.3.h,
