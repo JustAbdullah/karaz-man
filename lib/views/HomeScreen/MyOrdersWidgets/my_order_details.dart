@@ -524,11 +524,9 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                                   overlays: []);
                             },
                             onSaved: (newValue) {
-                                SystemChrome
-                                                          .setEnabledSystemUIMode(
-                                                              SystemUiMode
-                                                                  .manual,
-                                                              overlays: []);
+                              SystemChrome.setEnabledSystemUIMode(
+                                  SystemUiMode.manual,
+                                  overlays: []);
                               controller.newPriceText = newValue.toString();
                             },
                             keyboardType: TextInputType.number,
@@ -723,6 +721,71 @@ class _MyOrdersDetailsState extends State<MyOrdersDetails> {
                                 textAlign: TextAlign.center,
                               ),
                             )),
+                      ),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: 200.w,
+                          height: 35.h,
+                          decoration: BoxDecoration(
+                              color: AppColors.balckColorTypeFour,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Text(
+                           "85-رقم التواصل مع العميل".tr,
+                            style: TextStyle(
+                                height: 1.3.h,
+                                fontSize: 15,
+                                fontFamily: AppTextStyles.Almarai,
+                                color: AppColors.whiteColor),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10.w),
+                        child: Row(
+                          children: [
+                            Text(
+                             "86-رقم الهاتف:".tr,
+                              style: TextStyle(
+                                  height: 1.3.h,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: AppTextStyles.Almarai,
+                                  color: AppColors.balckColorTypeFour),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(
+                              width: 2.w,
+                            ),
+                            Container(
+                                height: 20.h,
+                                decoration: BoxDecoration(
+                                    color: AppColors.theMainColor,
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 10.w),
+                                  child: Text(
+                                    controller.theNumberPhoneUser.toString(),
+                                    style: TextStyle(
+                                        height: 1.3.h,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: AppTextStyles.Almarai,
+                                        color: AppColors.whiteColor),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ))
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: 30.h,

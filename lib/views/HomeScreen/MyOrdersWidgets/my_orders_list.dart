@@ -221,7 +221,7 @@ class MyOrdersList extends StatelessWidget {
                                                                           [
                                                                           'order_number'],
                                                                       style:
-                                                                          TextStyle(
+                                                                           TextStyle(
                                                                         height:
                                                                             1.5.h,
                                                                         color: AppColors
@@ -395,6 +395,10 @@ class MyOrdersList extends StatelessWidget {
                                                                             .toString();
                                                                         controller.nameUser = snapshot
                                                                             .data['data'][i]['user_name']
+                                                                            .toString();
+
+                                                                            controller.theNumberPhoneUser = snapshot
+                                                                            .data['data'][i]['user_number_phone']
                                                                             .toString();
 
                                                                         controller

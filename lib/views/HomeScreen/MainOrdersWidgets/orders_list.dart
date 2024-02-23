@@ -72,7 +72,17 @@ class OrdersList extends StatelessWidget {
                               height: 20.h,
                             ),
                             FutureBuilder(
-                                future: homeController.getOrders(),
+                                future: homeController.getOrders(
+                                  homeController.tyeTypeOFSerivces.value
+                                      .toString(),
+                                  homeController.latitude.value.toString(),
+                                  homeController.latitudeMinus.value.toString(),
+                                  homeController.latitudePlus.value.toString(),
+                                  homeController.longitudeMinus.value
+                                      .toString(),
+                                  homeController.longitude.value.toString(),
+                                  homeController.longitudePlus.value.toString(),
+                                ),
                                 builder: (BuildContext context,
                                     AsyncSnapshot snapshot) {
                                   if (snapshot.hasData) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -41,6 +42,8 @@ class SaveeLocation extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: InkWell(
                 onTap: () {
+                  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+                      overlays: []);
                   Get.to(HomeScreen());
                 },
                 child: Container(
@@ -52,7 +55,7 @@ class SaveeLocation extends StatelessWidget {
                   ),
                   child: Center(
                     child: TextCustom(
-                        theText: "الانتقال الان".tr,
+                        theText: "82-الانتقال الان".tr,
                         fontSizeWidth: 20,
                         fontFamily: AppTextStyles.Almarai,
                         fontColor: AppColors.whiteColor),

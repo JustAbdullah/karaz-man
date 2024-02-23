@@ -59,7 +59,7 @@ class ControllerApp extends GetxController {
   RxDouble latitude = 0.0.obs;
   RxDouble latitudePlus = 0.0.obs;
   RxDouble latitudeMinus = 0.0.obs;
-  RxDouble latitudeOP = 0.08.obs;
+  RxDouble latitudeOP = 0.03.obs;
   RxInt Thewallet = 0.obs;
   RxInt ratio = 0.obs;
 
@@ -79,6 +79,7 @@ class ControllerApp extends GetxController {
         showTheOrderPage.value = true;
         ID.value = response['data'][0]['id'].toString();
         Name.value = response['data'][0]['name'].toString();
+        GetWallteAndRatio(ID.value.toString());
 
         theNameOFServiceType.value =
             response['data'][0]['services_main_name_en'].toString();
@@ -113,28 +114,32 @@ class ControllerApp extends GetxController {
 
   @override
   void onInit() {
-    if (appServices.sharedPreferences.containsKey('Name')) {
-      Name.value = appServices.sharedPreferences.getString('Name') as String;
-      theNameOFServiceType.value = appServices.sharedPreferences
-          .getString('services_main_name_en') as String;
-      tyeTypeOFSerivces.value =
-          appServices.sharedPreferences.getInt('service_type') as int;
-      Thewallet.value = appServices.sharedPreferences.getInt('wallet') as int;
-      ratio.value = appServices.sharedPreferences.getInt('ratio') as int;
+    if (appServices.sharedPreferences.containsKey('isLocationReady')) {
+      if (appServices.sharedPreferences.containsKey('Name')) {
+        Name.value = appServices.sharedPreferences.getString('Name') as String;
+        theNameOFServiceType.value = appServices.sharedPreferences
+            .getString('services_main_name_en') as String;
+        tyeTypeOFSerivces.value =
+            appServices.sharedPreferences.getInt('service_type') as int;
+        Thewallet.value = appServices.sharedPreferences.getInt('wallet') as int;
+        ratio.value = appServices.sharedPreferences.getInt('ratio') as int;
 
-      ID.value = appServices.sharedPreferences.getString('ID') as String;
+        ID.value = appServices.sharedPreferences.getString('ID') as String;
 
-      Phone.value = appServices.sharedPreferences.getString('phone') as String;
-      longitude.value =
-          appServices.sharedPreferences.getDouble('Long') as double;
-      latitude.value = appServices.sharedPreferences.getDouble('Lat') as double;
+        Phone.value =
+            appServices.sharedPreferences.getString('phone') as String;
+        longitude.value =
+            appServices.sharedPreferences.getDouble('Long') as double;
+        latitude.value =
+            appServices.sharedPreferences.getDouble('Lat') as double;
 
-      latitudePlus.value = latitude.value + latitudeOP.value;
-      latitudeMinus.value = latitude.value - latitudeOP.value;
+        latitudePlus.value = latitude.value + latitudeOP.value;
+        latitudeMinus.value = latitude.value - latitudeOP.value;
 
-      longitudePlus.value = longitude.value + longitudeOP.value;
-      longitudeMinus.value = longitude.value - longitudeOP.value;
-      GetWallteAndRatio(ID.value);
+        longitudePlus.value = longitude.value + longitudeOP.value;
+        longitudeMinus.value = longitude.value - longitudeOP.value;
+        GetWallteAndRatio(ID.value);
+      }
     }
 
     if (ID.value != 0) {
@@ -167,7 +172,31 @@ class ControllerApp extends GetxController {
 
   RxBool showTheDetails = false.obs;
 
-  Future getOrders() async {
+  Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
+      String longMin, String long, String longPlus) async {
+    var response = await crud.postRequest(AppLinksApi.getOrders, {
+      'type_id': idType.toString(),
+      'latitude': Lati.toString(),
+      'latitudeMinus': latiMin.toString(),
+      'latitudePlus': latiPlus.toString(),
+      'longitudeMinus': longMin.toString(),
+      'longitude': long.toString(),
+      'longitudePlus': longPlus.toString(),
+    });
+
+    if (response['status'] == "success") {
+      isHaveTheUserOrders.value = true;
+    } else {
+      isHaveTheUserOrders.value = false;
+    }
+
+    return response;
+  }
+
+  /*
+
+Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
+      String longMin, String long, String longPlus) async {
     var response = await crud.postRequest(AppLinksApi.getOrders, {
       'type_id': tyeTypeOFSerivces.value.toString(),
       'latitude': latitude.value.toString(),
@@ -187,7 +216,12 @@ class ControllerApp extends GetxController {
     return response;
   }
 
+
+  */
+
   RxBool isHaveTheUserSubOrders = false.obs;
+
+  String theNumberPhoneUser ="";
 
   Future getSubOfOrders(String numberOfOrder) async {
     var response = await crud.postRequest(AppLinksApi.getTypeOrders, {
@@ -246,6 +280,8 @@ class ControllerApp extends GetxController {
         appServices.sharedPreferences.setDouble('Long', longitude.value);
         appServices.sharedPreferences.setDouble('Lat', latitude.value);
         isLoginSignAuthSuccessfully.value = true;
+
+        appServices.sharedPreferences.setString('isLocationReady', "ready");
       });
     } else {}
     return response;
