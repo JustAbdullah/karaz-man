@@ -3,9 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:services_man_karaz/views/HomeScreen/show_location.dart';
 
 import 'MainOrdersWidgets/order_details.dart';
+import 'MainOrdersWidgets/order_list_main_new.dart';
 import 'MainOrdersWidgets/orders_list.dart';
 import 'MenuWidget/menu_widget.dart';
 import 'MyOrdersWidgets/my_order_details.dart';
+import 'MyOrdersWidgets/my_order_details_list_new.dart';
 import 'MyOrdersWidgets/my_orders_list.dart';
 import 'SettingsWidgets/info_account.dart';
 import 'SettingsWidgets/lang.dart';
@@ -28,8 +30,9 @@ class HomeScreen extends StatelessWidget {
               OrdersList(),
               MyOrdersList(),
               Align(alignment: Alignment.bottomCenter, child: MenuWidget()),
-              OrdersDetails(),
-              MyOrdersDetails(),
+              OrderListMainNew(),
+              //   MyOrdersDetails(),
+              MyOrderListMainNew(),
               SettingsMenu(),
               InfoAcount(),
               Lang(),

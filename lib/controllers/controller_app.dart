@@ -108,7 +108,10 @@ class ControllerApp extends GetxController {
         appServices.sharedPreferences.setDouble('Lat', latitude.value);
         isLoginSignAuthSuccessfully.value = true;
       });
-    } else {}
+    } else {
+      waitLoginSignAuth.value = false;
+      errorLoginSignAuth.value = true;
+    }
     return response;
   }
 
@@ -221,7 +224,7 @@ Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
 
   RxBool isHaveTheUserSubOrders = false.obs;
 
-  String theNumberPhoneUser ="";
+  String theNumberPhoneUser = "";
 
   Future getSubOfOrders(String numberOfOrder) async {
     var response = await crud.postRequest(AppLinksApi.getTypeOrders, {
@@ -322,6 +325,12 @@ Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
             myCurrentPositionLatitude = value.latitude;
             myCurrentPositionLongitude = value.longitude;
             saveLocation(value.latitude, value.longitude);
+
+            latitudePlus.value = value.latitude + latitudeOP.value;
+            latitudeMinus.value = value.longitude - latitudeOP.value;
+
+            longitudePlus.value = longitude.value + longitudeOP.value;
+            longitudeMinus.value = longitude.value - longitudeOP.value;
             await Future.delayed(Duration(seconds: 2), () async {
               getDataUserAfterAddLocation();
             });
@@ -329,7 +338,9 @@ Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
             await Future.delayed(Duration(seconds: 4), () async {
               loadingTheLocationAndSave.value = false;
 
-              Get.to(SaveeLocation());
+              Future.delayed(const Duration(seconds: 5), () async {
+                Get.to(SaveeLocation());
+              });
             });
           });
         }
@@ -353,6 +364,7 @@ Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
         {'services_man': ID.value.toString(), 'order_id': idOrder.toString()});
 
     showTheDetails.value = false;
+    showTheOrderPage.value = false;
     Get.to(HomeScreen());
 
     return response;
@@ -680,7 +692,7 @@ Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
 
   addIntoDataBaseInvoice(String idUser, String pdf) async {
     var response = await crud.postRequest(AppLinksApi.add_invoice, {
-      'id_user': idUser.toString(),
+      'id': idUser.toString(),
       'service_man': ID.toString(),
       'pdf': "https://larra.xyz/thenewImages/${pdf.toString()}.pdf",
     });
@@ -720,4 +732,30 @@ Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
       return response;
     }
   }
+
+  /////////////////////////////////////////...................... The OrderList New .......................////////////////
+
+  RxInt whereIsTheOrderStyp = 2.obs;
+  RxInt choosedPay = 1.obs;
+  RxBool showTheConfOrder = true.obs;
+
+  ///////////////
+
+  RxBool showTheAcceptOrder = true.obs;
+  RxBool showEndOrder = false.obs;
+  RxInt countTheStypes = 2.obs;
+
+  void clear() {
+    showTheAcceptOrder.value = true;
+    showEndOrder.value = false;
+    countTheStypes.value = 2;
+  }
+
+  void goToEndOrder() {
+    showTheAcceptOrder.value = false;
+    showEndOrder.value = true;
+    countTheStypes.value = 3;
+  }
+
+  ///
 }

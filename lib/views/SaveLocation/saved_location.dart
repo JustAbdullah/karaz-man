@@ -42,9 +42,11 @@ class SaveeLocation extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: InkWell(
                 onTap: () {
-                  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-                      overlays: []);
-                  Get.to(HomeScreen());
+                  Future.delayed(const Duration(seconds: 1), () async {
+                    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+                        overlays: []);
+                    Get.to(HomeScreen());
+                  });
                 },
                 child: Container(
                   width: 300.w,
