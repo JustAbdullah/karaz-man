@@ -335,10 +335,10 @@ Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
               getDataUserAfterAddLocation();
             });
 
-            await Future.delayed(Duration(seconds: 4), () async {
+            await Future.delayed(Duration(seconds: 6), () async {
               loadingTheLocationAndSave.value = false;
 
-              Future.delayed(const Duration(seconds: 5), () async {
+              Future.delayed(const Duration(seconds: 1), () async {
                 Get.to(SaveeLocation());
               });
             });
