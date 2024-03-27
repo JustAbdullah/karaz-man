@@ -11,6 +11,7 @@ import 'core/localization/changelanguage.dart';
 import 'core/localization/translation.dart';
 import 'core/services/appservices.dart';
 import 'firebase_options.dart';
+import 'views/createAccount/create_account.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -76,7 +77,7 @@ class MyApp extends StatelessWidget {
       home: const Scaffold(
           body: SafeArea(
               child: ScreenUtilInit(
-                  designSize: Size(360, 690), child: LoadingScreen()))),
+                  designSize: Size(360, 690), child: CreateAccount()))),
       theme: ThemeData(primarySwatch: ModeColor.mode),
       builder: (context, child) {
         final mediaQueryData = MediaQuery.of(context);

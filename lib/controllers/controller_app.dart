@@ -21,6 +21,7 @@ import '../core/services/appservices.dart';
 import '../linksapi.dart';
 import '../views/SaveLocation/saved_location.dart';
 import '../views/langScreen/choose_language.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -335,16 +336,17 @@ Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
               getDataUserAfterAddLocation();
             });
 
-            await Future.delayed(Duration(seconds: 6), () async {
-              loadingTheLocationAndSave.value = false;
-
-              Future.delayed(const Duration(seconds: 1), () async {
+            await Future.delayed(Duration(seconds: 4), () async {
+              Future.delayed(const Duration(seconds: 5), () async {
+                loadingTheLocationAndSave.value = false;
                 Get.to(SaveeLocation());
               });
             });
           });
         }
-      } else {}
+      } else {
+        loadingTheLocationAndSave.value = false;
+      }
     });
   }
 
@@ -530,12 +532,6 @@ Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
     });
 
     return response;
-  }
-
-  upIm(File? mfile) async {
-    // ignore: unused_local_variable
-    var response =
-        await crud.postRequestFile(AppLinksApi.uploadimage, {}, mfile!);
   }
 
   void savePdf(String idOfOrder, String nameServiceMan, String nameOfUser,
@@ -757,5 +753,57 @@ Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
     countTheStypes.value = 3;
   }
 
-  ///
+///////////////////////////////////
+  TextEditingController name = TextEditingController();
+  TextEditingController id = TextEditingController();
+  TextEditingController phone = TextEditingController();
+  TextEditingController password = TextEditingController();
+
+  RxBool chooseTheTypeWork = false.obs;
+  RxString TextOFTypeWork = "لم تقم بتحديد نوع العمل".obs;
+  RxString TextOFTypeWorkEn = "لم تقم بتحديد نوع العمل".obs;
+  RxBool addImageWork = false.obs;
+  var filename;
+
+  RxBool isChooesImage = false.obs;
+  int theType = 1;
+
+  String nameText = "";
+  String IdText = "";
+  String phoneText = "";
+  String PasswordText = "";
+  upIm(File? mfile) async {
+    // ignore: unused_local_variable
+    var response =
+        await crud.postRequestFile(AppLinksApi.uploadimage, {}, mfile!);
+  }
+
+  RxBool waitCreateAccount = false.obs;
+  RxBool isAddedTheAccount = false.obs;
+  createAccount(String name, String phone, String idphoto, String password,
+      String typeWork, String lic) async {
+    FirebaseMessaging.instance.getToken().then((value) async {
+      waitCreateAccount.value = true;
+      var response = await crud.postRequest(AppLinksApi.createAccount, {
+        'name': name.toString(),
+        'phone': phone.toString(),
+        'id_photo': idphoto.toString(),
+        'password': password.toString(),
+        'service_type': typeWork.toString(),
+        'license': "https://larra.xyz/images_karaz/$lic",
+        'token': value.toString(),
+      });
+      if (response['status'] == "success") {
+        waitCreateAccount.value = false;
+        isAddedTheAccount.value = true;
+        return response;
+      }
+    });
+  }
+
+  Future getMainType() async {
+    var response = await crud.postRequest(AppLinksApi.getMainTypes, {});
+
+    return response;
+  }
 }

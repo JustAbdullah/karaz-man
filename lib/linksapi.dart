@@ -42,4 +42,8 @@ class AppLinksApi {
 
   static const getDataRatio =
       "https://larra.xyz/php_serivecs/serivecs_man/get_data_ra_wa.php";
+  static const getMainTypes =
+      "https://larra.xyz/php_serivecs/get_main_types.php";
+
+  static const createAccount = "$path/create_account.php";
 }

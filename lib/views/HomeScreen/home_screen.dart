@@ -25,20 +25,22 @@ class HomeScreen extends StatelessWidget {
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          child: Stack(
-            children: [
-              OrdersList(),
-              MyOrdersList(),
-              Align(alignment: Alignment.bottomCenter, child: MenuWidget()),
-              OrderListMainNew(),
-              //   MyOrdersDetails(),
-              MyOrderListMainNew(),
-              SettingsMenu(),
-              InfoAcount(),
-              Lang(),
-              ShowTheMyLocation(),
-              Align(alignment: Alignment.center, child: ShowTheLocation()),
-            ],
+          child: SafeArea(
+            child: Stack(
+              children: [
+                OrdersList(),
+                MyOrdersList(),
+                Align(alignment: Alignment.bottomCenter, child: MenuWidget()),
+                OrderListMainNew(),
+                //   MyOrdersDetails(),
+                MyOrderListMainNew(),
+                SettingsMenu(),
+                InfoAcount(),
+                Lang(),
+                ShowTheMyLocation(),
+                Align(alignment: Alignment.center, child: ShowTheLocation()),
+              ],
+            ),
           ),
         ),
       )),

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import 'package:lottie/lottie.dart';
 import 'package:services_man_karaz/views/HomeScreen/home_screen.dart';
+import 'package:services_man_karaz/views/createAccount/create_account.dart';
 
 import '../../controllers/controller_app.dart';
 import '../../core/constant/app_text_styles.dart';
@@ -131,6 +132,23 @@ class Login extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(
+                height: 60.h,
+              ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: InkWell(
+                  onTap: () {
+                    Get.to(CreateAccount());
+                  },
+                  child: TextCustom(
+                      theText: "223-طلب الانضمام للتطبيق كرز الفنيين".tr,
+                      fontSizeWidth: 23,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: AppTextStyles.Almarai,
+                      fontColor: AppColors.theMainColor),
+                ),
+              )
             ]),
           ),
           GetX<ControllerApp>(
