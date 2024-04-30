@@ -9,6 +9,8 @@ class AppLinksApi {
   static const getOrders = "$path/get_orders.php";
   static const getTypeOrders = "$path/get_sub_orders.php";
   static const getMyOrder = "$path/get_my_orders.php";
+  static const getMyOrderPerformed = "$path/get_my_performed_orders.php";
+
   static const saveLocation = "$path/save_location.php";
   static const getDataUser = "$path/get_data_man.php";
 
@@ -46,4 +48,9 @@ class AppLinksApi {
       "https://larra.xyz/php_serivecs/get_main_types.php";
 
   static const createAccount = "$path/create_account.php";
+  static const checkAccount = "$path/check_account.php";
+
+  static const editPassword = "$path/edit_password.php";
+  static const deleteOrder =
+      "https://larra.xyz/php_serivecs/serivecs_man/delete_order_user.php";
 }

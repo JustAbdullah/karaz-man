@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:services_man_karaz/views/HomeScreen/show_location.dart';
 
-import 'MainOrdersWidgets/order_details.dart';
+import '../OrdersPerformedList/orders_performed_list.dart';
 import 'MainOrdersWidgets/order_list_main_new.dart';
 import 'MainOrdersWidgets/orders_list.dart';
+
 import 'MenuWidget/menu_widget.dart';
-import 'MyOrdersWidgets/my_order_details.dart';
 import 'MyOrdersWidgets/my_order_details_list_new.dart';
 import 'MyOrdersWidgets/my_orders_list.dart';
 import 'SettingsWidgets/info_account.dart';
@@ -29,11 +28,12 @@ class HomeScreen extends StatelessWidget {
             child: Stack(
               children: [
                 OrdersList(),
-                MyOrdersList(),
+                MyOrdersList(), OrdersPerformedList(),
                 Align(alignment: Alignment.bottomCenter, child: MenuWidget()),
                 OrderListMainNew(),
                 //   MyOrdersDetails(),
                 MyOrderListMainNew(),
+
                 SettingsMenu(),
                 InfoAcount(),
                 Lang(),

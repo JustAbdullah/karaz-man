@@ -264,7 +264,6 @@ class _MyOrderListMainNewState extends State<MyOrderListMainNew> {
                           visible: controller.showTheAcceptOrder.value,
                           child: SizedBox(
                               width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height,
                               child: SingleChildScrollView(
                                   child: Column(children: [
                                 SizedBox(
@@ -443,8 +442,8 @@ class _MyOrderListMainNewState extends State<MyOrderListMainNew> {
                                 SizedBox(
                                   height: 3.h,
                                 ),
-                                Container(
-                                  height: 70.h,
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width,
                                   child: FutureBuilder(
                                       future: homeController.getSubOfOrders(
                                           controller.numberOfOrder.toString()),
@@ -1497,9 +1496,38 @@ class _MyOrderListMainNewState extends State<MyOrderListMainNew> {
                                 SizedBox(
                                   height: 15.h,
                                 ),
+                                Container(
+                                  color: Colors.black,
+                                  height: 0.7.h,
+                                  width: MediaQuery.of(context).size.width,
+                                ),
+                                SizedBox(
+                                  height: 15.h,
+                                ),
+                                Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 20.w),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "246-المعلومات الإضافية".tr,
+                                        style: TextStyle(
+                                            fontFamily: AppTextStyles.Almarai,
+                                            color: Colors.black,
+                                            fontSize: 17.sp,
+                                            fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15.h,
+                                ),
                                 SizedBox(
                                   height: 10.h,
                                 ),
+
                                 InkWell(
                                   onTap: () {
                                     controller.endTheOrder(

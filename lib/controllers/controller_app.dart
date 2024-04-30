@@ -45,6 +45,8 @@ class ControllerApp extends GetxController {
   final crud = Crud();
   AppServices appServices = Get.find();
   TextEditingController passwordAuthLoginController = TextEditingController();
+  TextEditingController IdPhotoAuthLoginController = TextEditingController();
+  String idPhotoLogin = "";
   final keyAuthLogin = GlobalKey();
 
   RxString passwordAuthLogin = "".obs;
@@ -69,10 +71,10 @@ class ControllerApp extends GetxController {
   RxDouble longitudeMinus = 0.0.obs;
   RxDouble longitudeOP = 0.08.obs;
 
-  login(String password) async {
+  login(String password, String idPhoto) async {
     waitLoginSignAuth.value = true;
-    var response = await crud
-        .postRequest(AppLinksApi.login, {"password": password.toString()});
+    var response = await crud.postRequest(AppLinksApi.login,
+        {"password": password.toString(), "id_photo": idPhoto.toString()});
 
     if (response['status'] == "success") {
       await Future.delayed(const Duration(seconds: 2), () async {
@@ -112,7 +114,14 @@ class ControllerApp extends GetxController {
     } else {
       waitLoginSignAuth.value = false;
       errorLoginSignAuth.value = true;
+      errorLoginSignAuth.value = true;
     }
+
+    Future.delayed(Duration(seconds: 30), () async {
+      waitLoginSignAuth.value = false;
+      errorLoginSignAuth.value = true;
+      errorLoginSignAuth.value = true;
+    });
     return response;
   }
 
@@ -175,6 +184,7 @@ class ControllerApp extends GetxController {
   String nameUser = "";
 
   RxBool showTheDetails = false.obs;
+  RxBool showThePerformedList = false.obs;
 
   Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
       String longMin, String long, String longPlus) async {
@@ -368,6 +378,9 @@ Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
     showTheDetails.value = false;
     showTheOrderPage.value = false;
     Get.to(HomeScreen());
+    Future.delayed(const Duration(milliseconds: 250), () async {
+      showMyTheOrderPage.value = true;
+    });
 
     return response;
   }
@@ -390,6 +403,22 @@ Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
     return response;
   }
 
+  RxBool isHaveTheOrdersPerformed = false.obs;
+
+  Future getMyOrdersPerformed() async {
+    var response = await crud.postRequest(AppLinksApi.getMyOrderPerformed, {
+      'services_man': ID.value.toString(),
+    });
+
+    if (response['status'] == "success") {
+      isHaveTheOrdersPerformed.value = true;
+    } else {
+      isHaveTheOrdersPerformed.value = false;
+    }
+
+    return response;
+  }
+
   ////////////End The Order,,,,,,,,,,,....................////////
   TextEditingController newPricdeCotroller = TextEditingController();
   String newPriceText = "";
@@ -402,6 +431,9 @@ Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
       showMyOrderTheDetails.value = false;
       sendNo(token.toString(), body.toString());
       Get.to(HomeScreen());
+      Future.delayed(const Duration(milliseconds: 250), () async {
+        showThePerformedList.value = true;
+      });
     } else {}
     return response;
   }
@@ -418,6 +450,9 @@ Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
       showMyOrderTheDetails.value = false;
       sendNo(token.toString(), body.toString());
       Get.to(HomeScreen());
+      Future.delayed(const Duration(milliseconds: 250), () async {
+        showThePerformedList.value = true;
+      });
     } else {}
 
     return response;
@@ -429,7 +464,7 @@ Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
       'User-Agent': 'Thunder Client (https://www.thunderclient.com)',
       'Content-Type': 'application/json',
       'Authorization':
-          'key=AAAAG1L9LFo:APA91bGxzrfDo94mD1i7BmA9QKK_KkXJy1xSnoe--K5Zo5pwrVjtTcQnSxtH4eirPGfGJRz8eA2aFYB1vl_dT5GXFa3zwA8h4fcq0wQAXmre2Tp35Y2wSuiTPBRKx53D2-8U8sgRzXfm'
+          'key=AAAArU8I4-E:APA91bGs5sdAa0TlqWRB9k7WKFlbISZ3mUwuNRHv7fW87aI1QtZW3Pd6Rc3zlW5O0aLB56bl8nK82h7EtaitBcjTQLXDFSFDTmDEK4kPCaKv75mRwi_GVtc812cahbRWyJzmVLoFVfz2'
     };
     var url = Uri.parse('https://fcm.googleapis.com/fcm/send');
 
@@ -690,7 +725,7 @@ Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
     var response = await crud.postRequest(AppLinksApi.add_invoice, {
       'id': idUser.toString(),
       'service_man': ID.toString(),
-      'pdf': "https://larra.xyz/thenewImages/${pdf.toString()}.pdf",
+      'pdf': "https://larra.xyz/images_karaz/${pdf.toString()}.pdf",
     });
 
     return response;
@@ -704,7 +739,7 @@ Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
     var response = await crud.postRequest(AppLinksApi.edit_wallte_service_man,
         {'id': ID.value.toString(), 'wallet': wallet.toString()});
 
-    await Future.delayed(Duration(seconds: 7), () async {
+    await Future.delayed(Duration(seconds: 5), () async {
       GetWallteAndRatio(ID.value);
     });
 
@@ -796,13 +831,77 @@ Future getOrders(String idType, String Lati, String latiMin, String latiPlus,
       if (response['status'] == "success") {
         waitCreateAccount.value = false;
         isAddedTheAccount.value = true;
+
+        isChooesImage.value = false;
+
         return response;
       }
     });
   }
 
+//////////Get Main Types To Selecte The Job......................////////////
   Future getMainType() async {
     var response = await crud.postRequest(AppLinksApi.getMainTypes, {});
+
+    return response;
+  }
+
+//////////////////////////////////////Forget Password?? Get Data And Edit..............///////////////////////////
+  RxBool waitCehckAccount = false.obs;
+  RxBool isHaveAccountCheck = false.obs;
+  RxBool isNotHaveAccountCheck = false.obs;
+  TextEditingController idGetData = TextEditingController();
+  TextEditingController phoneGetData = TextEditingController();
+  String idFetchData = "";
+  String phoneFetchData = "";
+
+  checkAccount(String phone, String idphoto) async {
+    FirebaseMessaging.instance.getToken().then((value) async {
+      waitCehckAccount.value = true;
+      var response = await crud.postRequest(AppLinksApi.checkAccount, {
+        'phone': phone.toString(),
+        'id_photo': idphoto.toString(),
+      });
+      if (response['status'] == "success") {
+        waitCehckAccount.value = false;
+
+        isHaveAccountCheck.value = true;
+      } else {
+        waitCehckAccount.value = false;
+        isNotHaveAccountCheck.value = true;
+      }
+      return response;
+    });
+  }
+
+  TextEditingController newPassword = TextEditingController();
+  RxBool waitEditPasswordAccount = false.obs;
+  RxBool isEditNewPassword = false.obs;
+  RxBool isNotEditNewPassword = false.obs;
+  String newPasswordAdd = "";
+  editPassword(String phone, String idphoto, String password) async {
+    waitEditPasswordAccount.value = true;
+    var response = await crud.postRequest(AppLinksApi.editPassword, {
+      'phone': phone.toString(),
+      'id_photo': idphoto.toString(),
+      'password': password.toString(),
+    });
+    if (response['status'] == "success") {
+      waitEditPasswordAccount.value = false;
+
+      isEditNewPassword.value = true;
+    } else {
+      waitEditPasswordAccount.value = false;
+      isNotEditNewPassword.value = true;
+    }
+    return response;
+  }
+
+  //////////////Delete Order ,,,,,,,,,,,,.........///////////////////////
+  deleteOrder(String idOrder) async {
+    var response = await crud.postRequest(AppLinksApi.deleteOrder, {
+      'order_id': idOrder.toString(),
+    });
 
     return response;
   }

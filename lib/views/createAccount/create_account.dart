@@ -18,10 +18,12 @@ import '../../controllers/controller_app.dart';
 import '../../core/constant/app_text_styles.dart';
 import '../../core/constant/appcolors.dart';
 import '../../core/constant/images_path.dart';
+import '../../core/localization/changelanguage.dart';
 import '../../customWidgets/custom_container.dart';
 import '../../customWidgets/custom_padding.dart';
 import '../../customWidgets/custom_text.dart';
 import '../../customWidgets/custome_textfiled.dart';
+import '../langScreen/choose_language.dart';
 
 class CreateAccount extends StatefulWidget {
   const CreateAccount({super.key});
@@ -113,7 +115,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 child: TextFormFiledCustom(
                   labelData: "212-رقم الهاتف".tr,
                   hintData: "213-قم بإدخال رقم الهاتف".tr,
-                  iconData: Icons.android_outlined,
+                  iconData: Icons.phone_android,
                   controllerData: appController.phone,
                   value: (value) {
                     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
@@ -148,7 +150,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 child: TextFormFiledCustom(
                   labelData: "214-رقم الهوية".tr,
                   hintData: "215-قم بإدخال رقم الهوية".tr,
-                  iconData: Icons.person,
+                  iconData: Icons.camera_front_outlined,
                   controllerData: appController.id,
                   value: (value) {
                     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
@@ -236,51 +238,62 @@ class _CreateAccountState extends State<CreateAccount> {
               SizedBox(
                 height: 20.h,
               ),
-              GetX<ControllerApp>(
-                  builder: (controller) => Text(
-                        controller.TextOFTypeWork.value.toString(),
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: AppTextStyles.Almarai,
-                            color: AppColors.balckColorTypeFour),
-                        textAlign: TextAlign.center,
-                      )),
+              GetX<ChangeLanguageToLocale>(
+                  builder: (scontroller) => scontroller.isChange.value == false
+                      ? GetX<ControllerApp>(
+                          builder: (controller) => Text(
+                                controller.TextOFTypeWork.value.toString(),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: AppTextStyles.Almarai,
+                                    color: AppColors.balckColorTypeFour),
+                                textAlign: TextAlign.center,
+                              ))
+                      : GetX<ControllerApp>(
+                          builder: (controller) => Text(
+                                controller.TextOFTypeWorkEn.value.toString(),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: AppTextStyles.Almarai,
+                                    color: AppColors.balckColorTypeFour),
+                                textAlign: TextAlign.center,
+                              ))),
               SizedBox(
                 height: 20.h,
               ),
               InkWell(
-                onTap: () async {
-                  XFile? xfile = await ImagePicker()
-                      .pickImage(source: ImageSource.gallery);
-                  if (xfile != null) {
-                    Random random = new Random();
-                    int randomNumber = random.nextInt(10000000);
-                    File myfile = await File(xfile!.path);
+                  onTap: () async {
+                    XFile? xfile = await ImagePicker()
+                        .pickImage(source: ImageSource.gallery);
+                    if (xfile != null) {
+                      Random random = new Random();
+                      int randomNumber = random.nextInt(10000000);
+                      File myfile = await File(xfile!.path);
 
-                    String dir =
-                        (await getApplicationDocumentsDirectory()).path;
-                    String newPath = path.join(dir, '$randomNumber.jpg');
-                    File f = await File(myfile.path).copy(newPath);
+                      String dir =
+                          (await getApplicationDocumentsDirectory()).path;
+                      String newPath = path.join(dir, '$randomNumber.jpg');
+                      File f = await File(myfile.path).copy(newPath);
 
-                    Timer.periodic(Duration(seconds: 1), (Timer timer) {
-                      // ignore: unnecessary_null_comparison
-                      if (myfile == null) {
-                      } else {
-                        if (appController.isChooesImage.value == false) {
-                          setState(() {});
+                      Timer.periodic(Duration(seconds: 1), (Timer timer) {
+                        // ignore: unnecessary_null_comparison
+                        if (myfile == null) {
+                        } else {
+                          if (appController.isChooesImage.value == false) {
+                            setState(() {});
 
-                          appController.upIm(f);
-                          setState(() {
-                            appController.filename = basename(f.path);
-                          });
-                          appController.addImageWork.value = true;
-                          appController.isChooesImage.value = true;
-                        } else {}
-                      }
-                    });
-                  } else {}
+                            appController.upIm(f);
+                            setState(() {
+                              appController.filename = basename(f.path);
+                            });
+                            appController.addImageWork.value = true;
+                            appController.isChooesImage.value = true;
+                          } else {}
+                        }
+                      });
+                    } else {}
 
-                  /*   await Future.delayed(Duration(seconds: 15),
+                    /*   await Future.delayed(Duration(seconds: 15),
                                           () async {
                                         controller.upIm(myfile);
                                         setState(() {
@@ -289,23 +302,35 @@ class _CreateAccountState extends State<CreateAccount> {
                                         });
                                         setState(() {});
                                       });*/
-                },
-                child: ContainerCustom(
-                  colorContainer: AppColors.theMainColor,
-                  widthContainer: 280,
-                  heigthContainer: 40,
-                  child: Center(
-                    child: Text(
-                      "219-رفع صورة الرخصة التجارية".tr,
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: AppTextStyles.Almarai,
-                          color: AppColors.whiteColor),
-                      textAlign: TextAlign.center,
+                  },
+                  child: GetX<ControllerApp>(
+                    builder: (controller) => ContainerCustom(
+                      colorContainer: controller.isChooesImage.value
+                          ? AppColors.redColor
+                          : AppColors.theMainColor,
+                      widthContainer: 280,
+                      heigthContainer: 40,
+                      child: Center(
+                        child: controller.isChooesImage.value
+                            ? Text(
+                                "تم رفع صورة الرخصة التجارية".tr,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: AppTextStyles.Almarai,
+                                    color: AppColors.whiteColor),
+                                textAlign: TextAlign.center,
+                              )
+                            : Text(
+                                "219-رفع صورة الرخصة التجارية".tr,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: AppTextStyles.Almarai,
+                                    color: AppColors.whiteColor),
+                                textAlign: TextAlign.center,
+                              ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
+                  )),
               SizedBox(
                 height: 30.h,
               ),
@@ -423,7 +448,7 @@ class _CreateAccountState extends State<CreateAccount> {
                           InkWell(
                             onTap: () {
                               appController.isAddedTheAccount.value = false;
-                              Get.to(LoadingScreen());
+                              Get.to(ChooseLanguage());
                             },
                             child: ContainerCustom(
                               widthContainer: 200.w,
@@ -482,58 +507,97 @@ class _CreateAccountState extends State<CreateAccount> {
                                   shrinkWrap: true,
                                   itemBuilder: (context, i) {
                                     return PaddingCustom(
-                                      theBottom: 14,
-                                      theLeft: 13,
-                                      theRight: 13,
-                                      theTop: 14,
-                                      child: SingleChildScrollView(
+                                        theBottom: 14,
+                                        theLeft: 13,
+                                        theRight: 13,
+                                        theTop: 14,
+                                        child: SingleChildScrollView(
                                           scrollDirection: Axis.horizontal,
                                           child: InkWell(
-                                            onTap: () {
-                                              controller.theType = int.parse(
-                                                  snapshot.data['data'][i]
-                                                          ['services_main_id']
-                                                      .toString());
-                                              controller.TextOFTypeWork
-                                                  .value = snapshot.data['data']
-                                                      [i]
-                                                      ['services_main_name_ar']
-                                                  .toString();
-                                              controller.TextOFTypeWorkEn
-                                                  .value = snapshot.data['data']
-                                                      [i]
-                                                      ['services_main_name_en']
-                                                  .toString();
-                                              controller.chooseTheTypeWork
-                                                  .value = false;
-                                            },
-                                            child: Container(
-                                              alignment: Alignment.centerRight,
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              child: Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 1.h,
-                                                    horizontal: 1.w),
-                                                child: Text(
-                                                  snapshot.data['data'][i]
-                                                      ['services_main_name_ar'],
-                                                  style: TextStyle(
-                                                    height: 1,
-                                                    color: AppColors.blackColor,
-                                                    fontFamily:
-                                                        AppTextStyles.Almarai,
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold,
+                                              onTap: () {
+                                                controller.theType = int.parse(
+                                                    snapshot.data['data'][i]
+                                                            ['services_main_id']
+                                                        .toString());
+                                                controller.TextOFTypeWork
+                                                    .value = snapshot.data[
+                                                        'data'][i][
+                                                        'services_main_name_ar']
+                                                    .toString();
+                                                controller.TextOFTypeWorkEn
+                                                    .value = snapshot.data[
+                                                        'data'][i][
+                                                        'services_main_name_en']
+                                                    .toString();
+                                                controller.chooseTheTypeWork
+                                                    .value = false;
+                                              },
+                                              child: Container(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                child: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 1.h,
+                                                      horizontal: 1.w),
+                                                  child: GetX<
+                                                      ChangeLanguageToLocale>(
+                                                    builder: (scontroller) =>
+                                                        scontroller.isChange
+                                                                    .value ==
+                                                                false
+                                                            ? Text(
+                                                                snapshot.data[
+                                                                        'data'][i]
+                                                                    [
+                                                                    'services_main_name_ar'],
+                                                                style:
+                                                                    TextStyle(
+                                                                  height: 1,
+                                                                  color: AppColors
+                                                                      .blackColor,
+                                                                  fontFamily:
+                                                                      AppTextStyles
+                                                                          .Almarai,
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                                maxLines: 1,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                              )
+                                                            : Text(
+                                                                snapshot.data[
+                                                                        'data'][i]
+                                                                    [
+                                                                    'services_main_name_en'],
+                                                                style:
+                                                                    TextStyle(
+                                                                  height: 1,
+                                                                  color: AppColors
+                                                                      .blackColor,
+                                                                  fontFamily:
+                                                                      AppTextStyles
+                                                                          .Almarai,
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                                maxLines: 1,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                              ),
                                                   ),
-                                                  maxLines: 1,
-                                                  textAlign: TextAlign.center,
                                                 ),
-                                              ),
-                                            ),
-                                          )),
-                                    );
+                                              )),
+                                        ));
                                   }),
                             );
                           } else {

@@ -3,26 +3,25 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../../controllers/controller_app.dart';
-import '../../../../core/constant/app_text_styles.dart';
-import '../../../../core/constant/appcolors.dart';
-import '../../../../core/localization/changelanguage.dart';
-import '../../../../customWidgets/custom_container.dart';
-import '../../../../customWidgets/custom_container_api.dart';
-import '../../../../customWidgets/custom_padding.dart';
-import '../../../../customWidgets/custom_cachednetworkimage.dart';
+import '../../../controllers/controller_app.dart';
+import '../../../core/constant/app_text_styles.dart';
+import '../../../core/constant/appcolors.dart';
+import '../../../core/localization/changelanguage.dart';
+import '../../../customWidgets/custom_container.dart';
+import '../../../customWidgets/custom_container_api.dart';
+import '../../../customWidgets/custom_padding.dart';
 
-import '../../../../customWidgets/custom_text.dart';
+import '../../../customWidgets/custom_text.dart';
 
-class OrdersList extends StatelessWidget {
-  const OrdersList({super.key});
+class OrdersPerformedList extends StatelessWidget {
+  const OrdersPerformedList({super.key});
 
   @override
   Widget build(BuildContext context) {
     ControllerApp homeController = Get.put(ControllerApp());
     return GetX<ControllerApp>(
         builder: (controller) => Visibility(
-            visible: controller.showTheOrderPage.value,
+            visible: controller.showThePerformedList.value,
             child: SafeArea(
               child: Stack(
                 children: [
@@ -57,7 +56,7 @@ class OrdersList extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "12-الطلبات المتوفرة".tr,
+                                      "241-الأعمال المنجزة".tr,
                                       style: TextStyle(
                                           height: 1.3.h,
                                           fontSize: 19,
@@ -74,29 +73,16 @@ class OrdersList extends StatelessWidget {
                                 height: 20.h,
                               ),
                               FutureBuilder(
-                                  future: homeController.getOrders(
-                                    homeController.tyeTypeOFSerivces.value
-                                        .toString(),
-                                    homeController.latitude.value.toString(),
-                                    homeController.latitudeMinus.value
-                                        .toString(),
-                                    homeController.latitudePlus.value
-                                        .toString(),
-                                    homeController.longitudeMinus.value
-                                        .toString(),
-                                    homeController.longitude.value.toString(),
-                                    homeController.longitudePlus.value
-                                        .toString(),
-                                  ),
+                                  future: homeController.getMyOrdersPerformed(),
                                   builder: (BuildContext context,
                                       AsyncSnapshot snapshot) {
                                     if (snapshot.hasData) {
-                                      return controller
-                                                  .isHaveTheUserOrders.value ==
+                                      return controller.isHaveTheOrdersPerformed
+                                                  .value ==
                                               false
                                           ? Center(
                                               child: Text(
-                                                "13-لاتمتلك اي طلبيات لعرضها"
+                                                "242-لاتمتلك اي اي اعمال منجزة لعرضها"
                                                     .tr,
                                                 style: TextStyle(
                                                   height: 1.5.h,
@@ -126,131 +112,13 @@ class OrdersList extends StatelessWidget {
                                                       theBottom: 10,
                                                       theTop: 10,
                                                       child: InkWell(
-                                                        onTap: () {
-                                                          controller.idOfOrder =
-                                                              snapshot
-                                                                  .data['data']
-                                                                      [i][
-                                                                      'order_id']
-                                                                  .toString();
-                                                          controller
-                                                                  .totalOfOrder =
-                                                              snapshot
-                                                                  .data['data']
-                                                                      [i][
-                                                                      'price_totle']
-                                                                  .toString();
-
-                                                          controller
-                                                                  .numberOfOrder =
-                                                              snapshot
-                                                                  .data['data']
-                                                                      [i][
-                                                                      'order_number']
-                                                                  .toString();
-
-                                                          controller
-                                                                  .nameOfMainTypeOrder =
-                                                              snapshot
-                                                                  .data['data']
-                                                                      [i][
-                                                                      'services_main_name_ar']
-                                                                  .toString();
-                                                          controller
-                                                                  .nameOfMainTypeOrderEn =
-                                                              snapshot
-                                                                  .data['data']
-                                                                      [i][
-                                                                      'services_main_name_en']
-                                                                  .toString();
-
-                                                          controller
-                                                                  .dateOfOrder =
-                                                              snapshot
-                                                                  .data['data']
-                                                                      [i][
-                                                                      'order_date']
-                                                                  .toString();
-                                                          controller
-                                                                  .timeOfOrder =
-                                                              snapshot
-                                                                  .data['data']
-                                                                      [i][
-                                                                      'order_time']
-                                                                  .toString();
-                                                          controller
-                                                                  .descriptionOfOrder =
-                                                              snapshot
-                                                                  .data['data']
-                                                                      [i][
-                                                                      'order_description']
-                                                                  .toString();
-                                                          controller
-                                                                  .urlImageOfOrder =
-                                                              snapshot
-                                                                  .data['data']
-                                                                      [i][
-                                                                      'order_image']
-                                                                  .toString();
-                                                          controller
-                                                                  .theWayToPayTheOrder =
-                                                              snapshot
-                                                                  .data['data']
-                                                                      [i][
-                                                                      'type_of_pay']
-                                                                  .toString();
-
-                                                          controller
-                                                                  .longitudeOrder =
-                                                              double.parse(snapshot
-                                                                  .data['data']
-                                                                      [i][
-                                                                      'user_longitude']
-                                                                  .toString());
-
-                                                          controller
-                                                                  .latitudeOrder =
-                                                              double.parse(snapshot
-                                                                  .data['data']
-                                                                      [i][
-                                                                      'user_latitude']
-                                                                  .toString());
-
-                                                          controller.ConvertIntoTextAddress(
-                                                              double.parse(snapshot
-                                                                  .data['data']
-                                                                      [i][
-                                                                      'user_latitude']
-                                                                  .toString()),
-                                                              double.parse(snapshot
-                                                                  .data['data']
-                                                                      [i][
-                                                                      'user_longitude']
-                                                                  .toString()));
-                                                          controller
-                                                                  .tokenTheUser =
-                                                              snapshot
-                                                                  .data['data']
-                                                                      [i]
-                                                                      ['token']
-                                                                  .toString();
-                                                          controller.idUser =
-                                                              snapshot
-                                                                  .data['data']
-                                                                      [i][
-                                                                      'user_id']
-                                                                  .toString();
-
-                                                          controller
-                                                              .showTheDetails
-                                                              .value = true;
-                                                        },
+                                                        onTap: () {},
                                                         child: ContainerCustom(
                                                           theBorderRadius: 10,
                                                           colorContainer:
                                                               AppColors
                                                                   .whiteColor,
-                                                          heigthContainer: 110,
+                                                          heigthContainer: 120,
                                                           widthContainer:
                                                               MediaQuery.sizeOf(
                                                                       context)
@@ -316,6 +184,9 @@ class OrdersList extends StatelessWidget {
                                                                       ],
                                                                     ),
                                                                   ),
+                                                                  SizedBox(
+                                                                    height: 5.h,
+                                                                  ),
                                                                   Row(
                                                                     mainAxisAlignment:
                                                                         MainAxisAlignment
@@ -323,10 +194,62 @@ class OrdersList extends StatelessWidget {
                                                                     children: [
                                                                       Padding(
                                                                         padding:
-                                                                            EdgeInsets.symmetric(horizontal: 20.w),
+                                                                            EdgeInsets.symmetric(horizontal: 7.w),
                                                                         child:
                                                                             Row(
                                                                           children: [
+                                                                            Text(
+                                                                              "244-رقم العملية:".tr,
+                                                                              style: TextStyle(
+                                                                                color: AppColors.balckColorTypeThree,
+                                                                                fontFamily: AppTextStyles.Almarai,
+                                                                                fontSize: 14,
+                                                                                fontWeight: FontWeight.bold,
+                                                                              ),
+                                                                              textAlign: TextAlign.center,
+                                                                            ),
+                                                                            SizedBox(
+                                                                              width: 2.w,
+                                                                            ),
+                                                                            Text(
+                                                                              snapshot.data['data'][i]['order_number'],
+                                                                              style: TextStyle(
+                                                                                color: AppColors.yellowColor,
+                                                                                fontFamily: AppTextStyles.Almarai,
+                                                                                fontSize: 15,
+                                                                                fontWeight: FontWeight.bold,
+                                                                              ),
+                                                                              textAlign: TextAlign.center,
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: 5.h,
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding:
+                                                                            EdgeInsets.symmetric(horizontal: 7.w),
+                                                                        child:
+                                                                            Row(
+                                                                          children: [
+                                                                            Text(
+                                                                              "245-الأجمالي:".tr,
+                                                                              style: TextStyle(
+                                                                                color: AppColors.balckColorTypeThree,
+                                                                                fontFamily: AppTextStyles.Almarai,
+                                                                                fontSize: 14,
+                                                                                fontWeight: FontWeight.bold,
+                                                                              ),
+                                                                              textAlign: TextAlign.center,
+                                                                            ),
                                                                             Text(
                                                                               "AED",
                                                                               style: TextStyle(
@@ -351,96 +274,6 @@ class OrdersList extends StatelessWidget {
                                                                               textAlign: TextAlign.center,
                                                                             ),
                                                                           ],
-                                                                        ),
-                                                                      ),
-                                                                      InkWell(
-                                                                        onTap:
-                                                                            () {
-                                                                          controller.tokenTheUser = snapshot
-                                                                              .data['data'][i]['token']
-                                                                              .toString();
-                                                                          controller.idUser = snapshot
-                                                                              .data['data'][i]['user_id']
-                                                                              .toString();
-                                                                          controller.idOfOrder = snapshot
-                                                                              .data['data'][i]['order_id']
-                                                                              .toString();
-                                                                          controller.totalOfOrder = snapshot
-                                                                              .data['data'][i]['price_totle']
-                                                                              .toString();
-
-                                                                          controller.numberOfOrder = snapshot
-                                                                              .data['data'][i]['order_number']
-                                                                              .toString();
-
-                                                                          controller.nameOfMainTypeOrder = snapshot
-                                                                              .data['data'][i]['services_main_name_ar']
-                                                                              .toString();
-                                                                          controller.nameOfMainTypeOrderEn = snapshot
-                                                                              .data['data'][i]['services_main_name_en']
-                                                                              .toString();
-
-                                                                          controller.dateOfOrder = snapshot
-                                                                              .data['data'][i]['order_date']
-                                                                              .toString();
-                                                                          controller.timeOfOrder = snapshot
-                                                                              .data['data'][i]['order_time']
-                                                                              .toString();
-                                                                          controller.descriptionOfOrder = snapshot
-                                                                              .data['data'][i]['order_description']
-                                                                              .toString();
-                                                                          controller.urlImageOfOrder = snapshot
-                                                                              .data['data'][i]['order_image']
-                                                                              .toString();
-                                                                          controller.theWayToPayTheOrder = snapshot
-                                                                              .data['data'][i]['type_of_pay']
-                                                                              .toString();
-
-                                                                          controller.longitudeOrder = double.parse(snapshot
-                                                                              .data['data'][i]['user_longitude']
-                                                                              .toString());
-
-                                                                          controller.latitudeOrder = double.parse(snapshot
-                                                                              .data['data'][i]['user_latitude']
-                                                                              .toString());
-
-                                                                          controller.ConvertIntoTextAddress(
-                                                                              double.parse(snapshot.data['data'][i]['user_latitude'].toString()),
-                                                                              double.parse(snapshot.data['data'][i]['user_longitude'].toString()));
-
-                                                                          controller
-                                                                              .showTheDetails
-                                                                              .value = true;
-                                                                        },
-                                                                        child:
-                                                                            Container(
-                                                                          alignment:
-                                                                              Alignment.center,
-                                                                          height:
-                                                                              25.h,
-                                                                          decoration:
-                                                                              BoxDecoration(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(5),
-                                                                            color:
-                                                                                AppColors.theMainColor,
-                                                                          ),
-                                                                          child:
-                                                                              Padding(
-                                                                            padding:
-                                                                                EdgeInsets.symmetric(horizontal: 10.w),
-                                                                            child:
-                                                                                Text(
-                                                                              "18-مشاهدة التفاصيل".tr,
-                                                                              style: TextStyle(
-                                                                                height: 1.5.h,
-                                                                                color: snapshot.data['data'][i]['order_confirmation'] == "0" ? AppColors.whiteColor : AppColors.whiteColor,
-                                                                                fontFamily: AppTextStyles.Almarai,
-                                                                                fontSize: 11,
-                                                                              ),
-                                                                              textAlign: TextAlign.center,
-                                                                            ),
-                                                                          ),
                                                                         ),
                                                                       ),
                                                                     ],

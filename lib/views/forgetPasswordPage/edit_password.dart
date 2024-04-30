@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import 'package:lottie/lottie.dart';
 import 'package:services_man_karaz/views/HomeScreen/home_screen.dart';
+import 'package:services_man_karaz/views/LoginScreen/login_screen.dart';
 import 'package:services_man_karaz/views/createAccount/create_account.dart';
 
 import '../../controllers/controller_app.dart';
@@ -16,10 +17,9 @@ import '../../customWidgets/custom_padding.dart';
 import '../../customWidgets/custom_text.dart';
 import '../../customWidgets/custome_textfiled.dart';
 import '../SaveLocation/save_location.dart';
-import '../forgetPasswordPage/forget_password_page.dart';
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+class EditPassword extends StatelessWidget {
+  const EditPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class Login extends StatelessWidget {
               Align(
                 alignment: Alignment.topCenter,
                 child: TextCustom(
-                    theText: "1-تسجيل الدخول".tr,
+                    theText: "234-إعادة تعيين رمز الدخول".tr,
                     fontSizeWidth: 23,
                     fontFamily: AppTextStyles.Almarai,
                     fontColor: AppColors.blackColorsTypeOne),
@@ -50,7 +50,7 @@ class Login extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 50.w),
                   child: Text(
-                    "2-لطفًا  قم بإدخال البيانات التالية لتسجيل دخولك".tr,
+                    "235-قم بإدخال رمز الدخول الجديد".tr,
                     style: TextStyle(
                         height: 1.5.h,
                         fontSize: 15.5.sp,
@@ -69,11 +69,11 @@ class Login extends StatelessWidget {
                   labelData: "3-رمز الدخول".tr,
                   hintData: "3-رمز الدخول".tr,
                   iconData: Icons.password,
-                  controllerData: appController.passwordAuthLoginController,
+                  controllerData: appController.newPassword,
                   value: (value) {
                     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
                         overlays: []);
-                    appController.passwordAuthLogin.value = value.toString();
+                    appController.newPasswordAdd = value.toString();
 
                     return value;
                   },
@@ -88,42 +88,7 @@ class Login extends StatelessWidget {
                   onChanged: (value) {
                     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
                         overlays: []);
-                    appController.passwordAuthLogin.value = value.toString();
-                    return value;
-                  },
-                  // ignore: body_might_complete_normally_nullable
-                  validator: (value) {},
-                ),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.w),
-                child: TextFormFiledCustom(
-                  labelData: "214-رقم الهوية".tr,
-                  hintData: "215-قم بإدخال رقم الهوية".tr,
-                  iconData: Icons.camera_front_outlined,
-                  controllerData: appController.IdPhotoAuthLoginController,
-                  value: (value) {
-                    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-                        overlays: []);
-                    appController.idPhotoLogin = value.toString();
-
-                    return value;
-                  },
-                  fillColor: AppColors.whiteColor,
-                  hintColor: AppColors.theMainColor,
-                  iconColor: AppColors.theMainColor,
-                  borderSideColor: AppColors.whiteColor,
-                  fontColor: AppColors.balckColorTypeThree,
-                  obscureText: false,
-                  keyboardType: TextInputType.text,
-                  autofillHints: [AutofillHints.name],
-                  onChanged: (value) {
-                    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-                        overlays: []);
-                    appController.idPhotoLogin = value.toString();
+                    appController.newPasswordAdd = value.toString();
                     return value;
                   },
                   // ignore: body_might_complete_normally_nullable
@@ -149,9 +114,10 @@ class Login extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  appController.login(
-                      appController.passwordAuthLogin.value.toString(),
-                      appController.idPhotoLogin.toString());
+                  appController.editPassword(
+                      appController.phoneFetchData.toString(),
+                      appController.idFetchData.toString(),
+                      appController.newPasswordAdd.toString());
                 },
                 child: ContainerCustom(
                   colorContainer: AppColors.theMainColor,
@@ -159,7 +125,7 @@ class Login extends StatelessWidget {
                   heigthContainer: 40,
                   child: Center(
                     child: Text(
-                      "4-تسجيل الدخول الان".tr,
+                      "236-التعديل الان".tr,
                       style: TextStyle(
                           fontSize: 16,
                           fontFamily: AppTextStyles.Almarai,
@@ -169,45 +135,11 @@ class Login extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Align(
-                alignment: Alignment.topCenter,
-                child: InkWell(
-                  onTap: () {
-                    Get.to(ForgetPasswordPage());
-                  },
-                  child: TextCustom(
-                      theText: "243-نسيت رمز الدخول؟أستعد الان".tr,
-                      fontSizeWidth: 15.sp,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: AppTextStyles.Almarai,
-                      fontColor: AppColors.yellowColor),
-                ),
-              ),
-              SizedBox(
-                height: 60.h,
-              ),
-              Align(
-                alignment: Alignment.topCenter,
-                child: InkWell(
-                  onTap: () {
-                    Get.to(CreateAccount());
-                  },
-                  child: TextCustom(
-                      theText: "223-طلب الانضمام للتطبيق كرز الفنيين".tr,
-                      fontSizeWidth: 15.sp,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: AppTextStyles.Almarai,
-                      fontColor: AppColors.theMainColor),
-                ),
-              )
             ]),
           ),
           GetX<ControllerApp>(
               builder: (controller) => Visibility(
-                  visible: controller.waitLoginSignAuth.value,
+                  visible: controller.waitEditPasswordAccount.value,
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
@@ -215,7 +147,7 @@ class Login extends StatelessWidget {
                   ))),
           GetX<ControllerApp>(
               builder: (controller) => Visibility(
-                  visible: controller.waitLoginSignAuth.value,
+                  visible: controller.waitEditPasswordAccount.value,
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
@@ -223,7 +155,7 @@ class Login extends StatelessWidget {
                   ))),
           GetX<ControllerApp>(
               builder: (controller) => Visibility(
-                  visible: controller.waitLoginSignAuth.value,
+                  visible: controller.waitEditPasswordAccount.value,
                   child: Align(
                     alignment: Alignment.center,
                     child: Column(
@@ -233,8 +165,7 @@ class Login extends StatelessWidget {
                         Lottie.asset(ImagesPath.loadingAppOpeartions,
                             width: 140.w),
                         Text(
-                          "5-انتظر قليلاً يتم تسجيل الدخول  والتاكد من البيانات"
-                              .tr,
+                          "237-انتظر قليلاً يتم حفظ البيانات".tr,
                           style: TextStyle(
                             color: AppColors.whiteColor,
                             fontFamily: AppTextStyles.Almarai,
@@ -246,7 +177,7 @@ class Login extends StatelessWidget {
                   ))),
           GetX<ControllerApp>(
               builder: (controller) => Visibility(
-                  visible: controller.isLoginSignAuthSuccessfully.value,
+                  visible: controller.isEditNewPassword.value,
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
@@ -254,7 +185,7 @@ class Login extends StatelessWidget {
                   ))),
           GetX<ControllerApp>(
               builder: (controller) => Visibility(
-                  visible: controller.isLoginSignAuthSuccessfully.value,
+                  visible: controller.isEditNewPassword.value,
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
@@ -262,7 +193,7 @@ class Login extends StatelessWidget {
                   ))),
           GetX<ControllerApp>(
               builder: (controller) => Visibility(
-                  visible: controller.isLoginSignAuthSuccessfully.value,
+                  visible: controller.isEditNewPassword.value,
                   child: PaddingCustom(
                     theTop: 190.h,
                     child: Align(
@@ -275,7 +206,7 @@ class Login extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20.w),
                             child: Text(
-                              "6-عزيزي المستخدم تم تسجيل الدخول بنجاح,,قم بالضغط على الزر للتوجة للرئيسية"
+                              "238-عزيزي المستخدم لقد تم تعديل البيانات بنجاح,,قم بتسجيل دخولك الان"
                                   .tr,
                               style: TextStyle(
                                 height: 1.7.h,
@@ -291,8 +222,8 @@ class Login extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () {
-                              appController.showTheOrderPage.value = true;
-                              Get.to(SaveLocation());
+                              appController.isEditNewPassword.value = false;
+                              Get.offAll(Login());
                             },
                             child: ContainerCustom(
                               widthContainer: 200.w,
@@ -313,7 +244,7 @@ class Login extends StatelessWidget {
                   ))),
           GetX<ControllerApp>(
               builder: (controller) => Visibility(
-                  visible: controller.errorLoginSignAuth.value,
+                  visible: controller.isNotEditNewPassword.value,
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
@@ -321,7 +252,7 @@ class Login extends StatelessWidget {
                   ))),
           GetX<ControllerApp>(
               builder: (controller) => Visibility(
-                  visible: controller.errorLoginSignAuth.value,
+                  visible: controller.isNotEditNewPassword.value,
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
@@ -329,7 +260,7 @@ class Login extends StatelessWidget {
                   ))),
           GetX<ControllerApp>(
               builder: (controller) => Visibility(
-                  visible: controller.errorLoginSignAuth.value,
+                  visible: controller.isNotEditNewPassword.value,
                   child: PaddingCustom(
                     theTop: 190.h,
                     child: Align(
@@ -341,7 +272,7 @@ class Login extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20.w),
                             child: Text(
-                              "8-عزيزي المستخدم اسم المستخدم او كلمة المرور خاطئة,,الرجاء التاكد من صحتهم"
+                              "239-عزيزي المستخدم نأسف على ذلك ولكن لم تتمكن من تعديل البيانات"
                                   .tr,
                               style: TextStyle(
                                 height: 1.7.h,
@@ -357,8 +288,9 @@ class Login extends StatelessWidget {
                           ),
                           InkWell(
                               onTap: () {
-                                appController.errorLoginSignAuth.value = false;
-                                appController.waitLoginSignAuth.value = false;
+                                appController.isNotEditNewPassword.value =
+                                    false;
+                                Get.offAll(Login());
                               },
                               child: ContainerCustom(
                                 widthContainer: 200.w,
@@ -366,7 +298,7 @@ class Login extends StatelessWidget {
                                 colorContainer: AppColors.yellowColor,
                                 child: Center(
                                   child: TextCustom(
-                                      theText: "9-الاخفاء".tr,
+                                      theText: "240-العودة".tr,
                                       fontSizeWidth: 20,
                                       fontFamily: AppTextStyles.Almarai,
                                       fontColor: AppColors.balckColorTypeThree),

@@ -9,6 +9,7 @@ import '../../../controllers/controller_app.dart';
 import '../../../core/constant/app_text_styles.dart';
 import '../../../core/constant/appcolors.dart';
 import '../../../core/localization/changelanguage.dart';
+import '../../../customWidgets/custom_cachednetworkimage.dart';
 import '../../../customWidgets/custom_container.dart';
 import '../../../customWidgets/custom_container_api.dart';
 import '../../../customWidgets/custom_padding.dart';
@@ -297,8 +298,8 @@ class OrderListMainNew extends StatelessWidget {
                     ),
                     Visibility(
                         visible: controller.showTheConfOrder.value,
-                        child: Container(
-                          height: 70.h,
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
                           child: FutureBuilder(
                               future: homeController.getSubOfOrders(
                                   controller.numberOfOrder.toString()),
@@ -975,11 +976,82 @@ class OrderListMainNew extends StatelessWidget {
                             ],
                           ),
                         )),
+
+                    SizedBox(
+                      height: 15.h,
+                    ),
+
                     Visibility(
                         visible: controller.showTheConfOrder.value,
-                        child: SizedBox(
-                          height: 25.h,
+                        child: Container(
+                          color: Colors.black,
+                          height: 0.7.h,
+                          width: MediaQuery.of(context).size.width,
                         )),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+
+                    Visibility(
+                        visible: controller.showTheConfOrder.value,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.w),
+                          child: Row(
+                            children: [
+                              Text(
+                                "246-المعلومات الإضافية".tr,
+                                style: TextStyle(
+                                    fontFamily: AppTextStyles.Almarai,
+                                    color: Colors.black,
+                                    fontSize: 17.sp,
+                                    fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        )),
+                    PaddingCustom(
+                      theTop: 00.h,
+                      theBottom: 00.h,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30.w),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            controller.descriptionOfOrder.toString(),
+                            style: TextStyle(
+                                height: 1.3.h,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: AppTextStyles.Almarai,
+                                color: AppColors.balckColorTypeFour),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    PaddingCustom(
+                      theTop: 00.h,
+                      theBottom: 00.h,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30.w),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: CustomCachedNetworkImage(
+                            urlTheImage: controller.urlImageOfOrder.toString(),
+                            width: 150,
+                            height: 150,
+                            boxFit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
                       child: SingleChildScrollView(
@@ -991,6 +1063,12 @@ class OrderListMainNew extends StatelessWidget {
                               onTap: () {
                                 controller.chooseTheOrder(
                                     controller.idOfOrder.toString());
+                                controller.sendNo(
+                                    controller.tokenTheUser.toString(),
+                                    "عزيزي العميل لقد قبل الفني طلبك من أجل القيام بالخدمة وسيتم التواصل معك في الوقت المناسب");
+                                controller.sendMessage(
+                                    "عزيزي العميل لقد قبل الفني طلبك من أجل القيام بالخدمة وسيتم التواصل معك في الوقت المناسب",
+                                    controller.idUser.toString());
                               },
                               child: Container(
                                   alignment: Alignment.center,
@@ -1024,7 +1102,15 @@ class OrderListMainNew extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
+                                controller.deleteOrder(
+                                    controller.idOfOrder.toString());
                                 controller.showTheDetails.value = false;
+                                controller.sendNo(
+                                    controller.tokenTheUser.toString(),
+                                    "عزيزي العميل نأسف على ذلك ولكن قد تم رفض طلبك للقيام بالخدمة التي تحمل رقم:${controller.numberOfOrder}");
+                                controller.sendMessage(
+                                    "عزيزي العميل نأسف على ذلك ولكن قد تم رفض طلبك للقيام بالخدمة التي تحمل رقم:${controller.numberOfOrder}",
+                                    controller.idUser.toString());
                               },
                               child: Container(
                                   alignment: Alignment.center,
@@ -1035,7 +1121,7 @@ class OrderListMainNew extends StatelessWidget {
                                       color: AppColors.whiteColor,
                                       border: Border.all(
                                         color: AppColors
-                                            .theMainColor, //                   <--- border color
+                                            .redColor, //                   <--- border color
                                         width: 1.5,
                                       )),
                                   child: Padding(
@@ -1056,6 +1142,39 @@ class OrderListMainNew extends StatelessWidget {
                           ],
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        controller.showTheDetails.value = false;
+                      },
+                      child: Container(
+                          alignment: Alignment.center,
+                          width: 150.w,
+                          height: 50.h,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: AppColors.whiteColor,
+                              border: Border.all(
+                                color: AppColors
+                                    .theMainColor, //                   <--- border color
+                                width: 1.5,
+                              )),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 30.w),
+                            child: Text(
+                              "247-إخفاء العمل".tr,
+                              style: TextStyle(
+                                  height: 2.h,
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: AppTextStyles.Almarai,
+                                  color: AppColors.balckColorTypeFour),
+                              textAlign: TextAlign.center,
+                            ),
+                          )),
                     ),
 
                     ///////////////////////////////////////
